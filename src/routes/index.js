@@ -1,15 +1,37 @@
 import React from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import Main from '../pages/Main';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+
+import Main from '../pages/Main/';
+import Contact from '../pages/Contact/';
 
 const Routes = () => {
-  const Stack = createStackNavigator();
+  const Tab = createBottomTabNavigator();
 
   return (
-    <Stack.Navigator>
-      <Stack.Screen name="Main" component={Main} />
-    </Stack.Navigator>
+    <Tab.Navigator>
+      <Tab.Screen
+        name="Home"
+        component={Main}
+        options={{
+          tabBarLabel: 'Home',
+          tabBarIcon: ({ color }) => (
+            <Icon name="home" color={color} size={26} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Contato"
+        component={Contact}
+        options={{
+          tabBarLabel: 'Contato',
+          tabBarIcon: ({ color }) => (
+            <Icon name="phone" color={color} size={26} />
+          ),
+        }}
+      />
+    </Tab.Navigator>
   );
 };
 
