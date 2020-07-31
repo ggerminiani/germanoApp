@@ -7,7 +7,7 @@ import Colors from '../../styles/Colors';
 
 let screenWidth = Dimensions.get('window').width;
 let screenHeight = Dimensions.get('window').height;
-console.log(screenWidth);
+
 const SliderView = ({ name, data, onPress }) => {
   const refSlider = useRef(null);
   console.log(data.length);
@@ -70,6 +70,14 @@ const styles = StyleSheet.create({
     borderColor: Colors.border,
     borderRadius: 10,
     marginBottom: 10,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
   title: {
     marginLeft: 15,

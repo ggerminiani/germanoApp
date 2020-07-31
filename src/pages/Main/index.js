@@ -88,6 +88,7 @@ const Main = () => {
   ];
 
   const onPressNews = (e) => {
+    console.log('pressd');
     console.log(e);
   };
 
@@ -100,17 +101,9 @@ const Main = () => {
           data={news}
           onPress={(e) => onPressNews(e)}
         />
-        <SliderView
-          name="Super Destaques"
-          data={destaques}
-          onPress={(e) => onPressNews(e)}
-        />
+        {/* <SliderView name="Super Destaques" data={destaques} />
 
-        <SliderView
-          name="Anúncios"
-          data={others}
-          onPress={(e) => onPressNews(e)}
-        />
+        <SliderView name="Anúncios" data={others} /> */}
       </ScrollView>
     </View>
   );
