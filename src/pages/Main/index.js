@@ -2,8 +2,8 @@ import React from 'react';
 import { StyleSheet, Text, View, ScrollView } from 'react-native';
 
 import Logo from '../../components/logo';
-
 import SliderView from '../../components/sliderView';
+import QuartetView from '../../components/quartetView';
 
 import Colors from '../../styles/Colors';
 
@@ -88,7 +88,7 @@ const Main = () => {
   ];
 
   const onPressNews = (e) => {
-    console.log('pressd');
+    console.log('pressed');
     console.log(e);
   };
 
@@ -101,6 +101,8 @@ const Main = () => {
           data={news}
           onPress={(e) => onPressNews(e)}
         />
+
+        <QuartetView name="Super Destaques" data={destaques} />
         {/* <SliderView name="Super Destaques" data={destaques} />
 
         <SliderView name="Anúncios" data={others} /> */}

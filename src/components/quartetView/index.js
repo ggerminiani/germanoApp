@@ -1,39 +1,23 @@
-import React, { useEffect, useRef } from 'react';
-import { StyleSheet, ScrollView, Dimensions, Text, View } from 'react-native';
+import React from 'react';
+import { StyleSheet, Text, View, ScrollView, Dimensions } from 'react-native';
 
-import SliderViewItem from './sliderViewItem';
+import QuartetViewItem from './quartetViewItem/';
 
 import Colors from '../../styles/Colors';
 
 let screenWidth = Dimensions.get('window').width;
 let screenHeight = Dimensions.get('window').height;
 
-const SliderView = ({ name, data, onPress }) => {
-  const refSlider = useRef(null);
-
-  const timer = () => {
-    let scrollX = 0;
-    let maxX = (screenWidth - 40) * (data.length - 1);
-
-    setInterval(() => {
-      if (scrollX == maxX) {
-        scrollX = 0;
-      } else {
-        scrollX += screenWidth - 40;
-      }
-      refSlider.current.scrollTo({ x: scrollX, y: 0, animated: true });
-    }, 3500);
-  };
-
-  useEffect(() => {
-    timer();
-  }, []);
-
+const QuartetView = ({ name, data, onPress }) => {
   const renderItems = () => {
     let items = [];
     for (x = 0; x < data.length; x++) {
       items.push(
-        <SliderViewItem key={`${name}_${x}`} data={data[x]} onPress={onPress} />
+        <QuartetViewItem
+          key={`${name}_${x}`}
+          data={data[x]}
+          onPress={onPress}
+        />
       );
     }
     return items;
@@ -45,17 +29,33 @@ const SliderView = ({ name, data, onPress }) => {
       <View style={styles.container}>
         <ScrollView
           style={styles.slider}
-          ref={refSlider}
-          // scrollEventThrottle={1500}
-          // onScroll={(e) => {
-          //   console.log(e.nativeEvent);
-          // }}
           horizontal={true}
           pagingEnabled={true}
           showsHorizontalScrollIndicator={true}
           scrollIndicatorInsets={{ top: 10, left: 10, bottom: 10, right: 10 }}
         >
-          {renderItems()}
+          <View style={styles.hR}>
+            <View style={styles.h1}>
+              <Text>Olá 1</Text>
+            </View>
+
+            <View style={styles.h2}>
+              <Text>Olá 2</Text>
+            </View>
+          </View>
+
+          <View style={styles.hR}>
+            <View style={styles.h3}>
+              <Text>Olá 3</Text>
+            </View>
+
+            <View style={styles.h4}>
+              <Text>Olá 4</Text>
+            </View>
+          </View>
+          {
+            //renderItems()
+          }
         </ScrollView>
       </View>
     </View>
@@ -91,7 +91,16 @@ const styles = StyleSheet.create({
     margin: 10,
     width: screenWidth - 40,
     height: screenHeight * 0.4,
+    backgroundColor: 'yellow',
+  },
+  hR: {
+    flexDirection: 'column',
+    width: '50%',
+  },
+  h1: {
+    backgroundColor: 'green',
+    height: '50%',
   },
 });
 
-export default SliderView;
+export default QuartetView;
