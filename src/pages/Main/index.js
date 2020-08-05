@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet, Text, View, ScrollView } from 'react-native';
+
+import { getCars } from '../../services/Cars';
 
 import Logo from '../../components/logo';
 import SliderView from '../../components/sliderView';
@@ -8,6 +10,16 @@ import QuartetView from '../../components/quartetView';
 import Colors from '../../styles/Colors';
 
 const Main = () => {
+  useEffect(() => {
+    async function loadNews() {
+      console.log('loadNews');
+      const data = await getCars({ type: 'get_news' });
+      //console.log(data);
+    }
+
+    loadNews();
+  }, []);
+
   const news = [
     {
       carro: 'Toyota',

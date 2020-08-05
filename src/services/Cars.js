@@ -1,17 +1,27 @@
-import axios from 'react-native-axios';
-import { Axios } from 'react-native-axios/lib/axios';
-import reactNativeAxios from 'react-native-axios';
+import axios from 'axios';
 
-const url = 'www.germanoautomoveis.com.br/api/cars/';
+const url = 'https://www.germanoautomoveis.com.br/api/cars/';
 
-const getCars = async (data) => {
-  var instance = await reactNativeAxios
-    .create({
-      url: url,
-      data: data,
-      timeout: 10000,
+export const getCars = async (data) => {
+  /*const instance = await axios.create({
+    url: url,
+    data: data,
+    timeout: 10000,
+  });*/
+
+  const response = await axios
+    .post(url, data, { timeout: 100 })
+    .then(function (response) {
+      console.log('response');
+      console.log(response);
     })
-    .then((Response) => {
-      console.log(Response);
+    .catch(function (error) {
+      console.log('error');
+      console.log(error);
     });
+
+  //console.log('instance');
+  //console.log(response.data);
+  //console.log(response);
+  return response;
 };
