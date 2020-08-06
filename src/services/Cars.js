@@ -3,25 +3,21 @@ import axios from 'axios';
 const url = 'https://www.germanoautomoveis.com.br/api/cars/';
 
 export const getCars = async (data) => {
-  /*const instance = await axios.create({
-    url: url,
-    data: data,
-    timeout: 10000,
-  });*/
-
   const response = await axios
-    .post(url, data, { timeout: 100 })
+    .post(url, data, { timeout: 60000 })
     .then(function (response) {
-      console.log('response');
-      console.log(response);
+      return response.data;
     })
     .catch(function (error) {
-      console.log('error');
-      console.log(error);
+      if (error.toString().toLowerCase().includes('timeout ')) {
+        return {
+          status: 'error',
+          message: 'Requisição ultrapassou o limite de tempo de resposta.',
+        };
+      } else {
+        return { status: 'error', message: error.message };
+      }
     });
 
-  //console.log('instance');
-  //console.log(response.data);
-  //console.log(response);
   return response;
 };

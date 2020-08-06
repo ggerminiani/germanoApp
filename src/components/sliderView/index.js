@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { StyleSheet, ScrollView, Dimensions, Text, View } from 'react-native';
 
 import SliderViewItem from './sliderViewItem';
@@ -10,10 +10,12 @@ let screenHeight = Dimensions.get('window').height;
 
 const SliderView = ({ name, data, onPress }) => {
   const refSlider = useRef(null);
+  const [items, setItems] = useState(null);
+  const [startTimer, setstartTimer] = useState(true);
+  const maxX = (screenWidth - 40) * (data.ads.length - 1);
 
   const timer = () => {
     let scrollX = 0;
-    let maxX = (screenWidth - 40) * (data.length - 1);
 
     setInterval(() => {
       if (scrollX == maxX) {
@@ -26,18 +28,26 @@ const SliderView = ({ name, data, onPress }) => {
   };
 
   useEffect(() => {
-    timer();
-  }, []);
+    const renderItems = () => {
+      let items = [];
+      for (let x = 0; x < data.ads.length; x++) {
+        items.push(
+          <SliderViewItem
+            key={`${name}_${x}`}
+            data={data.ads[x]}
+            onPress={onPress}
+          />
+        );
+      }
+      setItems(items);
+      if (startTimer) {
+        timer();
+        setstartTimer(false);
+      }
+    };
 
-  const renderItems = () => {
-    let items = [];
-    for (x = 0; x < data.length; x++) {
-      items.push(
-        <SliderViewItem key={`${name}_${x}`} data={data[x]} onPress={onPress} />
-      );
-    }
-    return items;
-  };
+    renderItems();
+  }, [data]);
 
   return (
     <View>
@@ -55,7 +65,7 @@ const SliderView = ({ name, data, onPress }) => {
           showsHorizontalScrollIndicator={true}
           scrollIndicatorInsets={{ top: 10, left: 10, bottom: 10, right: 10 }}
         >
-          {renderItems()}
+          {items}
         </ScrollView>
       </View>
     </View>

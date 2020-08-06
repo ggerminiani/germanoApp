@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, ScrollView } from 'react-native';
 
 import { getCars } from '../../services/Cars';
@@ -10,36 +10,28 @@ import QuartetView from '../../components/quartetView';
 import Colors from '../../styles/Colors';
 
 const Main = () => {
+  const [news, setNews] = useState(null);
+  const [spotlights, setSpotlights] = useState(null);
+
   useEffect(() => {
     async function loadNews() {
-      console.log('loadNews');
       const data = await getCars({ type: 'get_news' });
-      //console.log(data);
+      if (data.status == 'successful') {
+        setNews(data);
+      }
+    }
+    async function loadSpotlights() {
+      const data = await getCars({ type: 'get_spotlights' });
+      console.log(data);
+      if (data.status == 'successful') {
+        setSpotlights(data);
+      }
     }
 
     loadNews();
+    loadSpotlights();
   }, []);
 
-  const news = [
-    {
-      carro: 'Toyota',
-      price: 'R$ 78.980,00',
-      foto:
-        'https://specials-images.forbesimg.com/imageserve/5d35eacaf1176b0008974b54/960x0.jpg?cropX1=790&cropX2=5350&cropY1=784&cropY2=3349',
-    },
-    {
-      carro: 'Ford Focus 2020 1.6 16v Flex Azul Conversível TopLine',
-      price: 'R$ 92.150,00',
-      foto:
-        'https://media.wired.com/photos/5d09594a62bcb0c9752779d9/125:94/w_1994,h_1500,c_limit/Transpo_G70_TA-518126.jpg',
-    },
-    {
-      carro: 'Chevrolet',
-      price: 'R$ 158.980,00',
-      foto:
-        'https://1.bp.blogspot.com/-vAjsF76TPYI/Xx6xAk4qJaI/AAAAAAAAglY/KCvglfSpr8QiyZikSGm88OvRmuBdUp9bgCLcBGAsYHQ/s640/Volkswagen-Golf-8-2020-Oettinger%2B%25282%2529.jpg',
-    },
-  ];
   const destaques = [
     {
       carro: 'Ford Fiesta 1.6 Class',
@@ -108,11 +100,14 @@ const Main = () => {
     <View style={styles.container}>
       <ScrollView>
         <Logo />
-        <SliderView
-          name="Novidades"
-          data={news}
-          onPress={(e) => onPressNews(e)}
-        />
+
+        {news !== null ? (
+          <SliderView
+            name="Novidades"
+            data={news}
+            onPress={(e) => onPressNews(e)}
+          />
+        ) : null}
 
         <QuartetView name="Super Destaques" data={destaques} />
         {/* <SliderView name="Super Destaques" data={destaques} />
@@ -127,7 +122,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.background,
-    marginTop: 20,
+    //marginTop: 20,
+    paddingTop: 20,
   },
 });
 

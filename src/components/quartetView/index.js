@@ -30,10 +30,30 @@ const QuartetView = ({ name, data, onPress }) => {
         <ScrollView
           style={styles.slider}
           horizontal={true}
-          pagingEnabled={true}
-          showsHorizontalScrollIndicator={true}
-          scrollIndicatorInsets={{ top: 10, left: 10, bottom: 10, right: 10 }}
+          //pagingEnabled={true}
+          //showsHorizontalScrollIndicator={true}
+          //scrollIndicatorInsets={{ top: 10, left: 10, bottom: 10, right: 10 }}
         >
+          <View style={styles.hR}>
+            <View style={styles.h1}>
+              <Text>Olá 1</Text>
+            </View>
+
+            <View style={styles.h2}>
+              <Text>Olá 2</Text>
+            </View>
+          </View>
+
+          <View style={styles.hR}>
+            <View style={styles.h3}>
+              <Text>Olá 3</Text>
+            </View>
+
+            <View style={styles.h4}>
+              <Text>Olá 4</Text>
+            </View>
+          </View>
+
           <View style={styles.hR}>
             <View style={styles.h1}>
               <Text>Olá 1</Text>
@@ -95,10 +115,24 @@ const styles = StyleSheet.create({
   },
   hR: {
     flexDirection: 'column',
-    width: '50%',
+    width: screenWidth / 2,
   },
   h1: {
+    padding: 10,
     backgroundColor: 'green',
+    height: '50%',
+  },
+  h2: {
+    padding: 10,
+    backgroundColor: 'red',
+    height: '50%',
+  },
+  h3: {
+    backgroundColor: 'blue',
+    height: '50%',
+  },
+  h4: {
+    backgroundColor: 'black',
     height: '50%',
   },
 });
