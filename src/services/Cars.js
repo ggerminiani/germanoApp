@@ -21,3 +21,5 @@ export const getCars = async (data) => {
 
   return response;
 };
+
+export const urlPhotos = 'https://www.germanoautomoveis.com.br/images/cars/';

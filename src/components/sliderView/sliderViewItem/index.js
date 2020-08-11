@@ -11,6 +11,7 @@ import {
 import Colors from '../../../styles/Colors';
 
 import numeral from '../../../vendros/numeral';
+import { urlPhotos } from '../../../services/Cars';
 
 let screenWidth = Dimensions.get('window').width;
 let screenHeight = Dimensions.get('window').height;
@@ -19,7 +20,7 @@ const SliderViewItem = ({ data, onPress }) => {
   let image_url =
     data.photo == null
       ? require('../../../assets/no_photo.png')
-      : { uri: data.photo };
+      : { uri: urlPhotos + data.photo };
   const car = `${data.brand} ${data.model} ${data.version}`;
 
   return (

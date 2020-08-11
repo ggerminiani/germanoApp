@@ -7,6 +7,7 @@ const Colors = {
   dolar: '#27ae60',
   text: '#ecf0f1',
   border: '#34495e',
+  inactive: '#bdc3c7',
 };
 
 export default Colors;
