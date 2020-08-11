@@ -21,7 +21,7 @@ const QuartetViewItem = ({ data, onPress }) => {
     data.photo == null
       ? require('../../../assets/no_photo.png')
       : { uri: urlPhotos + data.photo };
-  const car = `${data.brand} ${data.model} ${data.version}`;
+  const car = `${data.brand} ${data.model} ${data.version} (${data.yMade}/${data.yModel})`;
 
   return (
     <View style={styles.container}>

@@ -6,6 +6,7 @@ import { getCars } from '../../services/Cars';
 import Logo from '../../components/logo';
 import SliderView from '../../components/sliderView';
 import QuartetView from '../../components/quartetView';
+import CommonAds from '../../components/commonAds';
 
 import Colors from '../../styles/Colors';
 
@@ -57,6 +58,8 @@ const Main = () => {
             onPress={(e) => onPressNews(e)}
           />
         ) : null}
+
+        <CommonAds name="Veja Também" />
       </ScrollView>
     </View>
   );

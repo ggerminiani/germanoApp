@@ -21,7 +21,7 @@ const SliderViewItem = ({ data, onPress }) => {
     data.photo == null
       ? require('../../../assets/no_photo.png')
       : { uri: urlPhotos + data.photo };
-  const car = `${data.brand} ${data.model} ${data.version}`;
+  const car = `${data.brand} ${data.model} ${data.version} (${data.yMade}/${data.yModel})`;
 
   return (
     <View style={styles.container}>
@@ -63,17 +63,18 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 10,
   },
   description: {
-    fontSize: 18,
+    fontSize: 16,
     padding: 10,
     color: Colors.text,
     width: '100%',
     textAlign: 'left',
+    flex: 0.2,
   },
   price: {
     color: Colors.text,
     textAlign: 'center',
     fontSize: 18,
-    paddingVertical: 10,
+    paddingVertical: 7,
     width: '100%',
   },
   priceContainer: {
