@@ -9,29 +9,53 @@ import QuartetView from '../../components/quartetView';
 import CommonAds from '../../components/commonAds';
 
 import Colors from '../../styles/Colors';
+import { Logs } from 'expo';
 
 const Main = () => {
   const [news, setNews] = useState(null);
   const [spotlights, setSpotlights] = useState(null);
+  const [commons, setCommons] = useState(null);
 
   useEffect(() => {
     async function loadNews() {
       const data = await getCars({ type: 'get_news' });
-      if (data.status == 'successful') {
+      if (data !== undefined && data !== null && data.status == 'successful') {
         setNews(data);
       }
     }
+
     async function loadSpotlights() {
       const data = await getCars({ type: 'get_spotlights' });
-      console.log(data.ads.length);
-      if (data.status == 'successful') {
+      if (data !== undefined && data !== null && data.status == 'successful') {
         setSpotlights(data);
+      }
+    }
+
+    async function loadCommons() {
+      let exceptions = [];
+
+      if (news !== null) {
+        news.ads.forEach((value) => {
+          exceptions.push(value.idcar);
+        });
+      }
+
+      if (spotlights !== null) {
+        spotlights.ads.forEach((value) => {
+          exceptions.push(value.idcar);
+        });
+      }
+
+      const data = await getCars({ type: 'get_with_excep', exceptions });
+      if (data !== undefined && data !== null && data.status == 'successful') {
+        setCommons(data);
       }
     }
 
     loadNews();
     loadSpotlights();
-  }, []);
+    loadCommons();
+  }, [news, spotlights]);
 
   const onPressNews = (e) => {
     console.log('pressed');
@@ -59,7 +83,13 @@ const Main = () => {
           />
         ) : null}
 
-        <CommonAds name="Veja Também" />
+        {commons !== null ? (
+          <CommonAds
+            name="Veja Também"
+            data={commons.ads}
+            onPress={(e) => onPressNews(e)}
+          />
+        ) : null}
       </ScrollView>
     </View>
   );
