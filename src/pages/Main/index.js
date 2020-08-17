@@ -11,7 +11,7 @@ import CommonAds from '../../components/commonAds';
 import Colors from '../../styles/Colors';
 import { Logs } from 'expo';
 
-const Main = () => {
+const Main = ({ navigation }) => {
   const [news, setNews] = useState(null);
   const [spotlights, setSpotlights] = useState(null);
   const [commons, setCommons] = useState(null);
@@ -58,8 +58,12 @@ const Main = () => {
   }, [news, spotlights]);
 
   const onPressNews = (e) => {
-    console.log('pressed');
-    console.log(e);
+    //console.log('pressed');
+    //console.log(e);
+    navigation.navigate('Home', {
+      screen: 'Detalhes',
+      params: { idCar: e },
+    });
   };
 
   return (

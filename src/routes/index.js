@@ -1,19 +1,34 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createStackNavigator } from '@react-navigation/stack';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import Main from '../pages/Main/';
+
 import Search from '../pages/Search/';
 import Stock from '../pages/Stock/';
 import Sell from '../pages/Sell/';
 import Contact from '../pages/Contact/';
+import Details from '../pages/Details/';
+
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 import ColorsFlat from '../styles/Colors';
 
 const Routes = () => {
+  const Stack = createStackNavigator();
   const Tab = createBottomTabNavigator();
+
+  const actionStack = (props) => {
+    //console.log(props);
+    return (
+      <Stack.Navigator headerMode="none" initialRouteName="Main">
+        <Stack.Screen name="Main" component={Main} />
+        <Stack.Screen name="Detalhes" component={Details} />
+      </Stack.Navigator>
+    );
+  };
 
   return (
     <Tab.Navigator
@@ -25,7 +40,7 @@ const Routes = () => {
     >
       <Tab.Screen
         name="Home"
-        component={Main}
+        component={actionStack}
         options={{
           tabBarLabel: 'Home',
           tabBarIcon: ({ color }) => (
