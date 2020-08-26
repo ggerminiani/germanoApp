@@ -17,18 +17,53 @@ import { Colors } from 'react-native/Libraries/NewAppScreen';
 import ColorsFlat from '../styles/Colors';
 
 const Routes = () => {
-  const Stack = createStackNavigator();
   const Tab = createBottomTabNavigator();
 
-  const actionStack = (props) => {
-    //console.log(props);
+  const HomeStack = createStackNavigator();
+  function HomeStackScreen() {
     return (
-      <Stack.Navigator headerMode="none" initialRouteName="Main">
-        <Stack.Screen name="Main" component={Main} />
-        <Stack.Screen name="Detalhes" component={Details} />
-      </Stack.Navigator>
+      <HomeStack.Navigator headerMode="none">
+        <HomeStack.Screen name="Home" component={Main} />
+        <HomeStack.Screen name="Detalhes" component={Details} />
+      </HomeStack.Navigator>
     );
-  };
+  }
+
+  const SearchStack = createStackNavigator();
+  function SearchStackScreen() {
+    return (
+      <SearchStack.Navigator>
+        <SearchStack.Screen name="Pesquisar" component={Search} />
+      </SearchStack.Navigator>
+    );
+  }
+
+  const StockStack = createStackNavigator();
+  function StockStackScreen() {
+    return (
+      <StockStack.Navigator>
+        <StockStack.Screen name="Estoque" component={Stock} />
+      </StockStack.Navigator>
+    );
+  }
+
+  const SellStack = createStackNavigator();
+  function SellStackScreen() {
+    return (
+      <SellStack.Navigator>
+        <SellStack.Screen name="Vender" component={Sell} />
+      </SellStack.Navigator>
+    );
+  }
+
+  const ContactStack = createStackNavigator();
+  function ContactStackScreen() {
+    return (
+      <ContactStack.Navigator>
+        <ContactStack.Screen name="Contato" component={Contact} />
+      </ContactStack.Navigator>
+    );
+  }
 
   return (
     <Tab.Navigator
@@ -40,7 +75,7 @@ const Routes = () => {
     >
       <Tab.Screen
         name="Home"
-        component={actionStack}
+        component={HomeStackScreen}
         options={{
           tabBarLabel: 'Home',
           tabBarIcon: ({ color }) => (
@@ -50,7 +85,7 @@ const Routes = () => {
       />
       <Tab.Screen
         name="Pesquisar"
-        component={Search}
+        component={SearchStackScreen}
         options={{
           tabBarLabel: 'Pesquisar',
           tabBarIcon: ({ color }) => (
@@ -60,7 +95,7 @@ const Routes = () => {
       />
       <Tab.Screen
         name="Estoque"
-        component={Stock}
+        component={StockStackScreen}
         options={{
           tabBarLabel: 'Estoque',
           tabBarIcon: ({ color }) => (
@@ -70,7 +105,7 @@ const Routes = () => {
       />
       <Tab.Screen
         name="Vender"
-        component={Sell}
+        component={SellStackScreen}
         options={{
           tabBarLabel: 'Vender',
           tabBarIcon: ({ color }) => (
@@ -80,7 +115,7 @@ const Routes = () => {
       />
       <Tab.Screen
         name="Contato"
-        component={Contact}
+        component={ContactStackScreen}
         options={{
           tabBarLabel: 'Contato',
           tabBarIcon: ({ color }) => (

@@ -1,14 +1,33 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, Text, View, ActivityIndicator } from 'react-native';
+
+import { getCars } from '../../services/Cars';
 
 import Colors from '../../styles/Colors/';
 
 const Details = ({ route, navigation }) => {
+  console.log(route);
+  console.log(navigation);
   const { idCar } = route.params;
+  const [car, setCar] = useState(null);
+
+  useEffect(() => {
+    async function loadCar() {
+      const data = await getCars({ type: 'get_car', id: idCar });
+      if (data !== undefined && data !== null && data.status == 'successful') {
+        setCar(data);
+      }
+    }
+
+    loadCar();
+  }, []);
+
+  console.log(idCar);
 
   return (
-    <View style={styles.container}>
-      <Text>Olá</Text>
+    <View style={car !== null ? styles.container : styles.container}>
+      {car == null ? <ActivityIndicator size="large" /> : null}
+      <Text> Olá </Text>
     </View>
   );
 };
