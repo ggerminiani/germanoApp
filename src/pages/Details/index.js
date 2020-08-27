@@ -6,8 +6,6 @@ import { getCars } from '../../services/Cars';
 import Colors from '../../styles/Colors/';
 
 const Details = ({ route, navigation }) => {
-  console.log(route);
-  console.log(navigation);
   const { idCar } = route.params;
   const [car, setCar] = useState(null);
 
@@ -17,17 +15,27 @@ const Details = ({ route, navigation }) => {
       if (data !== undefined && data !== null && data.status == 'successful') {
         setCar(data);
       }
+      console.log(car);
     }
-
+    console.log('useEffect');
     loadCar();
-  }, []);
+  }, [idCar]);
 
-  console.log(idCar);
+  console.log('route');
+  console.log(route);
+  console.log('navigation');
+  console.log(navigation);
+  console.log('idCar: ', idCar);
 
   return (
-    <View style={car !== null ? styles.container : styles.container}>
-      {car == null ? <ActivityIndicator size="large" /> : null}
-      <Text> Olá </Text>
+    <View style={car == null ? styles.containerEmpty : styles.container}>
+      {car == null ? (
+        <ActivityIndicator size="large" />
+      ) : (
+        <View>
+          <Text>{car.ads[0].marca}</Text>
+        </View>
+      )}
     </View>
   );
 };
@@ -35,6 +43,13 @@ const Details = ({ route, navigation }) => {
 export default Details;
 
 const styles = StyleSheet.create({
+  containerEmpty: {
+    flex: 1,
+    backgroundColor: Colors.background,
+    justifyContent: 'center',
+    //marginTop: 20,
+    paddingTop: 20,
+  },
   container: {
     flex: 1,
     backgroundColor: Colors.background,

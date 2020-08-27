@@ -29,7 +29,12 @@ const SliderViewItem = ({ data, onPress }) => {
         style={styles.containerButton}
         onPress={(e) => onPress(data.idcar)}
       >
-        <Image source={image_url} resizeMethod="resize" style={styles.image} />
+        <Image
+          source={image_url}
+          resizeMethod="resize"
+          resizeMode="contain"
+          style={styles.image}
+        />
         <Text style={styles.description}>{car}</Text>
         <View style={styles.priceContainer}>
           <Text style={styles.price}>

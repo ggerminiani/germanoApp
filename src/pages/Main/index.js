@@ -60,10 +60,19 @@ const Main = ({ navigation }) => {
   const onPressNews = (e) => {
     //console.log('pressed');
     //console.log(e);
-    navigation.navigate('Detalhes', {
+
+    navigation.navigate('Main', {
+      screen: 'Detalhes',
+      params: {
+        idCar: e,
+      },
+      initial: true,
+    });
+
+    /*navigation.navigate('Detalhes', {
       params: { idCar: e },
       initial: false,
-    });
+    });*/
   };
 
   return (

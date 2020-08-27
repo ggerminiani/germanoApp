@@ -74,7 +74,7 @@ const Routes = () => {
       }}
     >
       <Tab.Screen
-        name="Home"
+        name="Main"
         component={HomeStackScreen}
         options={{
           tabBarLabel: 'Home',
