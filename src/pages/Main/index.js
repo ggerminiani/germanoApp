@@ -52,27 +52,20 @@ const Main = ({ navigation }) => {
       }
     }
 
-    loadNews();
-    loadSpotlights();
-    loadCommons();
-  }, [news, spotlights]);
+    console.log('in Effects MAIN');
+    if (news === null) {
+      loadNews();
+    }
+    if (spotlights === null) {
+      loadSpotlights();
+    }
+    if (commons === null) {
+      loadCommons();
+    }
+  }, [news, spotlights, commons]);
 
   const onPressNews = (e) => {
-    //console.log('pressed');
-    //console.log(e);
-
-    navigation.navigate('Main', {
-      screen: 'Detalhes',
-      params: {
-        idCar: e,
-      },
-      initial: true,
-    });
-
-    /*navigation.navigate('Detalhes', {
-      params: { idCar: e },
-      initial: false,
-    });*/
+    navigation.navigate('Detalhes', { idCar: e });
   };
 
   return (
