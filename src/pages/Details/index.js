@@ -1,14 +1,26 @@
-import React, { useState, useEffect, useLayoutEffect } from 'react';
-import { StyleSheet, Text, View, ActivityIndicator } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  ActivityIndicator,
+  Dimensions,
+  ScrollView,
+  Image,
+} from 'react-native';
 
 import { getCars } from '../../services/Cars';
 
+import { urlPhotos } from '../../services/Cars';
 import Colors from '../../styles/Colors/';
+
+let screenWidth = Dimensions.get('window').width;
+let screenHeight = Dimensions.get('window').height;
 
 const Details = ({ route, navigation }) => {
   const { idCar } = route.params;
   const [car, setCar] = useState(null);
-  const [elementcar, setelEmentCar] = useState(null);
+  const [element, setElement] = useState(null);
 
   useEffect(() => {
     async function loadData() {
@@ -183,11 +195,53 @@ const Details = ({ route, navigation }) => {
         others.push('Veículo Consignado');
       }
 
-      console.log(confort);
-      console.log(security);
-      console.log(multimedia);
-      console.log(external);
-      console.log(others);
+      //photoSlider
+      const photos = car.ads?.photo.length !== null ? car.ads.photo : null;
+
+      let images = [];
+
+      if (photos !== null) {
+        photos.map(({ idpic, thumbnail }) => {
+          let image_url = { uri: urlPhotos + thumbnail.replace(/thumb_/g, '') };
+          console.log('item');
+          console.log(image_url);
+          images.push(
+            <Image
+              key={idpic}
+              source={image_url}
+              resizeMethod="resize"
+              resizeMode="contain"
+              style={styles.image}
+            />
+          );
+        });
+      } else {
+        images.push(
+          <Image
+            source={require('../../assets/no_photo.png')}
+            resizeMethod="resize"
+            resizeMode="contain"
+            style={styles.image}
+          />
+        );
+      }
+
+      const PhotosElement = () => {
+        return (
+          <View>
+            <ScrollView
+              style={styles.slider}
+              horizontal={true}
+              pagingEnabled={true}
+            >
+              {images}
+            </ScrollView>
+            <Text>{`${car.ads.marca} ${car.ads.modelo} ${car.ads.versao}`}</Text>
+          </View>
+        );
+      };
+
+      setElement(<PhotosElement />);
     }
 
     if (car === null) {
@@ -199,32 +253,45 @@ const Details = ({ route, navigation }) => {
   }, [car]);
 
   return (
-    <View style={car == null ? styles.containerEmpty : styles.container}>
-      {car == null ? (
-        <ActivityIndicator size="large" />
-      ) : (
-        <View>
-          <Text>{car.ads.marca}</Text>
-        </View>
-      )}
+    <View style={element == null ? styles.containerEmpty : styles.container}>
+      {element == null ? <ActivityIndicator size="large" /> : element}
     </View>
   );
 };
-
-export default Details;
 
 const styles = StyleSheet.create({
   containerEmpty: {
     flex: 1,
     backgroundColor: Colors.background,
     justifyContent: 'center',
-    //marginTop: 20,
     paddingTop: 20,
   },
   container: {
     flex: 1,
-    backgroundColor: Colors.background,
-    //marginTop: 20,
     paddingTop: 20,
+    backgroundColor: Colors.background,
+  },
+  containerImage: {
+    flex: 1,
+    backgroundColor: 'black',
+  },
+  slider: {
+    margin: 10,
+    width: screenWidth - 20,
+    height: 250,
+    backgroundColor: Colors.dark_bckgrd,
+
+    borderWidth: 2,
+    borderColor: Colors.border,
+    borderRadius: 10,
+  },
+  image: {
+    width: screenWidth - 20,
+    height: '100%',
+    borderWidth: 2,
+    borderColor: Colors.border,
+    borderRadius: 10,
   },
 });
+
+export default Details;
