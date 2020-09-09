@@ -6,15 +6,18 @@ import {
   ActivityIndicator,
   Dimensions,
   ScrollView,
+  TouchableOpacity,
   Image,
   Alert,
 } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { getCars } from '../../services/Cars';
 
 import { urlPhotos } from '../../services/Cars';
 import Colors from '../../styles/Colors/';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+
+import numeral from '../../vendros/numeral';
 
 let screenWidth = Dimensions.get('window').width;
 let screenHeight = Dimensions.get('window').height;
@@ -235,15 +238,17 @@ const Details = ({ route, navigation }) => {
     const photos = car.ads?.photo.length !== null ? car.ads.photo : null;
     return photos.map(({ idpic, thumbnail }) => {
       return (
-        <Image
-          key={idpic}
-          source={{
-            uri: urlPhotos + thumbnail.replace(/thumb_/g, ''),
-          }}
-          resizeMethod="resize"
-          resizeMode="contain"
-          style={styles.image}
-        />
+        <TouchableOpacity key={idpic} onPress={() => onPressPhoto()}>
+          <Image
+            defaultSource={require('../../assets/no_photo.png')}
+            source={{
+              uri: urlPhotos + thumbnail.replace(/thumb_/g, ''),
+            }}
+            resizeMethod="resize"
+            resizeMode="contain"
+            style={styles.image}
+          />
+        </TouchableOpacity>
       );
     });
   };
@@ -256,7 +261,7 @@ const Details = ({ route, navigation }) => {
     //Could be: const variable = <Element />
     return (
       <View>
-        <TouchableOpacity onPress={onPressPhoto()}>
+        <ScrollView>
           <ScrollView
             style={styles.slider}
             horizontal={true}
@@ -264,8 +269,73 @@ const Details = ({ route, navigation }) => {
           >
             <PhotosItem />
           </ScrollView>
-        </TouchableOpacity>
-        <Text>{`${car.ads.marca} ${car.ads.modelo} ${car.ads.versao}`}</Text>
+
+          <View style={styles.carContainer}>
+            <Text
+              style={styles.carText}
+            >{`${car.ads.marca} ${car.ads.modelo} ${car.ads.versao}`}</Text>
+          </View>
+
+          <View style={styles.priceContainer}>
+            <Text style={styles.priceText}>
+              {numeral(parseFloat(car.ads.valor)).format('$ 0,0.00')}
+            </Text>
+          </View>
+
+          <View style={styles.detailsContainer}>
+            <View style={styles.detailsRow}>
+              <View style={styles.detailsItem}>
+                <Icon name="car-estate" color="white" size={30} />
+                <Text style={styles.detailsText}>{car.ads.carroceria}</Text>
+              </View>
+
+              <View style={styles.detailsItem}>
+                <Icon name="calendar-month" color="white" size={30} />
+                <Text
+                  style={styles.detailsText}
+                >{`${car.ads.ano_fabricacao}/${car.ads.ano_modelo}`}</Text>
+              </View>
+
+              <View style={styles.detailsItem}>
+                <Icon name="car-shift-pattern" color="white" size={30} />
+                <Text style={styles.detailsText}>{car.ads.cambio}</Text>
+              </View>
+            </View>
+
+            <View style={styles.detailsRow}>
+              <View style={styles.detailsItem}>
+                <Icon name="counter" color="white" size={30} />
+                <Text style={styles.detailsText}>
+                  {numeral(parseFloat(car.ads.km)).format('0,0')}
+                </Text>
+              </View>
+
+              <View style={styles.detailsItem}>
+                <Icon name="palette" color="white" size={30} />
+                <Text style={styles.detailsText}>{car.ads.cor}</Text>
+              </View>
+
+              <View style={styles.detailsItem}>
+                <Icon name="gas-station" color="white" size={30} />
+                <Text style={styles.detailsText}>{car.ads.combustivel}</Text>
+              </View>
+            </View>
+
+            <View style={styles.detailsRow}>
+              <View style={styles.detailsItem}>
+                <Icon name="car-door" color="white" size={30} />
+                <Text style={styles.detailsText}>{car.ads.portas}</Text>
+              </View>
+
+              <View style={styles.detailsItem}>
+                <Icon name="numeric" color="white" size={30} />
+                <Text
+                  style={styles.detailsText}
+                >{`Final ${car.ads.placa}`}</Text>
+              </View>
+            </View>
+          </View>
+        </ScrollView>
       </View>
     );
   };
@@ -304,7 +374,6 @@ const styles = StyleSheet.create({
     width: screenWidth - 20,
     height: 250,
     backgroundColor: Colors.dark_bckgrd,
-
     borderWidth: 2,
     borderColor: Colors.border,
     borderRadius: 10,
@@ -315,6 +384,57 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: Colors.border,
     borderRadius: 10,
+  },
+  carContainer: {
+    marginHorizontal: 10,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+    backgroundColor: Colors.dark_bckgrd,
+    borderWidth: 2,
+    borderBottomWidth: 0,
+    borderColor: Colors.border,
+  },
+  carText: {
+    padding: 5,
+    color: Colors.white,
+    textAlign: 'center',
+    fontSize: 18,
+    fontWeight: '500',
+  },
+  priceContainer: {
+    marginHorizontal: 10,
+    borderBottomLeftRadius: 10,
+    borderBottomRightRadius: 10,
+    backgroundColor: Colors.dolar,
+    borderWidth: 2,
+    borderTopWidth: 0,
+    borderColor: Colors.border,
+  },
+  priceText: {
+    padding: 5,
+    color: Colors.white,
+    textAlign: 'center',
+    fontSize: 18,
+    fontWeight: '500',
+  },
+  detailsContainer: {
+    margin: 10,
+    padding: 5,
+    borderRadius: 10,
+    backgroundColor: Colors.dark_bckgrd,
+    borderWidth: 2,
+    borderColor: Colors.border,
+  },
+  detailsRow: {
+    flexDirection: 'row',
+  },
+  detailsItem: {
+    flexDirection: 'row',
+    backgroundColor: 'blue',
+    justifyContent: 'center',
+  },
+  detailsText: {
+    backgroundColor: 'yellow',
   },
 });
 
