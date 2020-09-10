@@ -30,12 +30,11 @@ const Details = ({ route, navigation }) => {
   const [multimedia, setMultimedia] = useState([]);
   const [external, setExternal] = useState([]);
   const [others, setOthers] = useState([]);
-  const [element, setElement] = useState(null);
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
     async function loadData() {
       const data = await getCars({ type: 'get_car', id: idCar });
-      console.log(data);
       if (data !== undefined && data !== null && data.status == 'successful') {
         setCar(data);
       }
@@ -219,10 +218,7 @@ const Details = ({ route, navigation }) => {
       if (car.ads.consignado == '1') {
         setOthers((others) => [...others, 'Veículo Consignado']);
       }
-    }
-
-    async function loadElements() {
-      setElement(Elements);
+      setReady(true);
     }
 
     if (car === null) {
@@ -230,7 +226,6 @@ const Details = ({ route, navigation }) => {
     }
     if (car !== null) {
       loadCar();
-      loadElements();
     }
   }, [car]);
 
@@ -257,97 +252,166 @@ const Details = ({ route, navigation }) => {
     Alert.alert('clicado');
   };
 
-  const Elements = () => {
-    //Could be: const variable = <Element />
+  const RenderConfort = () => {
+    console.log(confort);
+    console.log(confort.length);
+    return <Text>Olá</Text>;
+    //return confort.map();
+  };
+
+  const ElementPhotos = () => {
     return (
       <View>
-        <ScrollView>
-          <ScrollView
-            style={styles.slider}
-            horizontal={true}
-            pagingEnabled={true}
-          >
-            <PhotosItem />
-          </ScrollView>
-
-          <View style={styles.carContainer}>
-            <Text
-              style={styles.carText}
-            >{`${car.ads.marca} ${car.ads.modelo} ${car.ads.versao}`}</Text>
-          </View>
-
-          <View style={styles.priceContainer}>
-            <Text style={styles.priceText}>
-              {numeral(parseFloat(car.ads.valor)).format('$ 0,0.00')}
-            </Text>
-          </View>
-
-          <View style={styles.detailsContainer}>
-            <View style={styles.detailsRow}>
-              <View style={styles.detailsItem}>
-                <Icon name="car-estate" color="white" size={30} />
-                <Text style={styles.detailsText}>{car.ads.carroceria}</Text>
-              </View>
-
-              <View style={styles.detailsItem}>
-                <Icon name="calendar-month" color="white" size={30} />
-                <Text
-                  style={styles.detailsText}
-                >{`${car.ads.ano_fabricacao}/${car.ads.ano_modelo}`}</Text>
-              </View>
-
-              <View style={styles.detailsItem}>
-                <Icon name="car-shift-pattern" color="white" size={30} />
-                <Text style={styles.detailsText}>{car.ads.cambio}</Text>
-              </View>
-            </View>
-
-            <View style={styles.detailsRow}>
-              <View style={styles.detailsItem}>
-                <Icon name="counter" color="white" size={30} />
-                <Text style={styles.detailsText}>
-                  {numeral(parseFloat(car.ads.km)).format('0,0')}
-                </Text>
-              </View>
-
-              <View style={styles.detailsItem}>
-                <Icon name="palette" color="white" size={30} />
-                <Text style={styles.detailsText}>{car.ads.cor}</Text>
-              </View>
-
-              <View style={styles.detailsItem}>
-                <Icon name="gas-station" color="white" size={30} />
-                <Text style={styles.detailsText}>{car.ads.combustivel}</Text>
-              </View>
-            </View>
-
-            <View style={styles.detailsRow}>
-              <View style={styles.detailsItem}>
-                <Icon name="car-door" color="white" size={30} />
-                <Text style={styles.detailsText}>{car.ads.portas}</Text>
-              </View>
-
-              <View style={styles.detailsItem}>
-                <Icon name="numeric" color="white" size={30} />
-                <Text
-                  style={styles.detailsText}
-                >{`Final ${car.ads.placa}`}</Text>
-              </View>
-            </View>
-          </View>
+        <ScrollView
+          style={styles.slider}
+          horizontal={true}
+          pagingEnabled={true}
+        >
+          <PhotosItem />
         </ScrollView>
+
+        <View style={styles.carContainer}>
+          <Text
+            style={styles.carText}
+          >{`${car.ads.marca} ${car.ads.modelo} ${car.ads.versao}`}</Text>
+        </View>
+
+        <View style={styles.priceContainer}>
+          <Text style={styles.priceText}>
+            {numeral(parseFloat(car.ads.valor)).format('$ 0,0.00')}
+          </Text>
+        </View>
       </View>
     );
   };
 
+  // <Text style={styles.title}>Detalhes</Text>
+  // <View style={styles.detailsContainer}>
+  //   <View style={styles.detailsRow}>
+  //     <View style={styles.detailsItem}>
+  //       <Icon
+  //         name="car-estate"
+  //         color="white"
+  //         size={30}
+  //         style={styles.detailsIcon}
+  //       />
+  //       <Text style={styles.detailsText}>
+  //         {car.ads.carroceria != ''
+  //           ? car.ads.carroceria.toUpperCase()
+  //           : '-'}
+  //       </Text>
+  //     </View>
+
+  //     <View style={styles.detailsItem}>
+  //       <Icon
+  //         name="calendar-month"
+  //         color="white"
+  //         size={30}
+  //         style={styles.detailsIcon}
+  //       />
+  //       <Text
+  //         style={styles.detailsText}
+  //       >{`${car.ads.ano_fabricacao}/${car.ads.ano_modelo}`}</Text>
+  //     </View>
+  //   </View>
+
+  //   <View style={styles.detailsRow}>
+  //     <View style={styles.detailsItem}>
+  //       <Icon
+  //         name="car-shift-pattern"
+  //         color="white"
+  //         size={30}
+  //         style={styles.detailsIcon}
+  //       />
+  //       <Text style={styles.detailsText}>
+  //         {car.ads.cambio != '' ? car.ads.cambio.toUpperCase() : '-'}
+  //       </Text>
+  //     </View>
+
+  //     <View style={styles.detailsItem}>
+  //       <Icon
+  //         name="counter"
+  //         color="white"
+  //         size={30}
+  //         style={styles.detailsIcon}
+  //       />
+  //       <Text style={styles.detailsText}>
+  //         {`${numeral(parseFloat(car.ads.km)).format('0,0')} KM`}
+  //       </Text>
+  //     </View>
+  //   </View>
+
+  //   <View style={styles.detailsRow}>
+  //     <View style={styles.detailsItem}>
+  //       <Icon
+  //         name="palette"
+  //         color="white"
+  //         size={30}
+  //         style={styles.detailsIcon}
+  //       />
+  //       <Text style={styles.detailsText}>{car.ads.cor}</Text>
+  //     </View>
+
+  //     <View style={styles.detailsItem}>
+  //       <Icon
+  //         name="gas-station"
+  //         color="white"
+  //         size={30}
+  //         style={styles.detailsIcon}
+  //       />
+  //       <Text style={styles.detailsText}>{car.ads.combustivel}</Text>
+  //     </View>
+  //   </View>
+
+  //   <View style={styles.detailsRow}>
+  //     <View style={styles.detailsItem}>
+  //       <Icon
+  //         name="car-door"
+  //         color="white"
+  //         size={30}
+  //         style={styles.detailsIcon}
+  //       />
+  //       <Text style={styles.detailsText}>
+  //         {`${car.ads.portas} PORTAS`}
+  //       </Text>
+  //     </View>
+
+  //     <View style={styles.detailsItem}>
+  //       <Icon
+  //         name="numeric"
+  //         color="white"
+  //         size={30}
+  //         style={styles.detailsIcon}
+  //       />
+  //       <Text style={styles.detailsText}>{`FINAL ${car.ads.placa
+  //         .substr(car.ads.placa.length - 1, 1)
+  //         .toUpperCase()}`}</Text>
+  //     </View>
+  //   </View>
+  // </View>
+
+  // <View>
+  //   <Text style={styles.title}>Conforto</Text>
+  //   <View style={styles.detailsContainer}>
+  //     {confort != '' ? console.log(confort) : null}
+  //   </View>
+  // </View>
+
+  const ElementDetails = () => {
+    return null;
+  };
+
   return (
-    <View style={element == null ? styles.containerEmpty : styles.container}>
-      {car == null ? (
-        <ActivityIndicator size="large" />
-      ) : element == null ? (
+    <View style={ready == null ? styles.containerEmpty : styles.container}>
+      {ready == false ? (
         <ActivityIndicator size="large" />
       ) : (
-        element
+        <View style={{ flex: 1 }}>
+          <ScrollView>
+            <ElementPhotos />
+            <ElementDetails />
+          </ScrollView>
+        </View>
       )}
     </View>
   );
@@ -370,28 +434,28 @@ const styles = StyleSheet.create({
     backgroundColor: 'black',
   },
   slider: {
-    margin: 10,
+    marginTop: 10,
+    marginHorizontal: 10,
     width: screenWidth - 20,
     height: 250,
     backgroundColor: Colors.dark_bckgrd,
     borderWidth: 2,
     borderColor: Colors.border,
-    borderRadius: 10,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
   },
   image: {
     width: screenWidth - 20,
     height: '100%',
-    borderWidth: 2,
     borderColor: Colors.border,
-    borderRadius: 10,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
   },
   carContainer: {
     marginHorizontal: 10,
-    borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
     backgroundColor: Colors.dark_bckgrd,
-    borderWidth: 2,
-    borderBottomWidth: 0,
+    borderLeftWidth: 2,
+    borderRightWidth: 2,
     borderColor: Colors.border,
   },
   carText: {
@@ -417,6 +481,13 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '500',
   },
+  title: {
+    marginLeft: 15,
+    marginTop: 15,
+    color: Colors.text,
+    fontSize: 24,
+    fontWeight: 'bold',
+  },
   detailsContainer: {
     margin: 10,
     padding: 5,
@@ -426,15 +497,23 @@ const styles = StyleSheet.create({
     borderColor: Colors.border,
   },
   detailsRow: {
+    flex: 1,
     flexDirection: 'row',
   },
   detailsItem: {
+    flex: 1,
     flexDirection: 'row',
-    backgroundColor: 'blue',
-    justifyContent: 'center',
   },
   detailsText: {
-    backgroundColor: 'yellow',
+    flex: 1,
+    justifyContent: 'center',
+    fontSize: 12.5,
+    color: Colors.white,
+    marginLeft: 6,
+    marginTop: 8,
+  },
+  detailsIcon: {
+    marginLeft: 5,
   },
 });
 
