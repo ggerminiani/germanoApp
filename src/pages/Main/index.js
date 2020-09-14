@@ -9,7 +9,6 @@ import QuartetView from '../../components/quartetView';
 import CommonAds from '../../components/commonAds';
 
 import Colors from '../../styles/Colors';
-import { Logs } from 'expo';
 
 const Main = ({ navigation }) => {
   const [news, setNews] = useState(null);
@@ -52,7 +51,6 @@ const Main = ({ navigation }) => {
       }
     }
 
-    console.log('in Effects MAIN');
     if (news === null) {
       loadNews();
     }

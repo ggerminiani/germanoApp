@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   Image,
   Alert,
+  Modal,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -31,6 +32,7 @@ const Details = ({ route, navigation }) => {
   const [external, setExternal] = useState([]);
   const [others, setOthers] = useState([]);
   const [ready, setReady] = useState(false);
+  const [modal, setModal] = useState(false);
 
   useEffect(() => {
     async function loadData() {
@@ -41,6 +43,12 @@ const Details = ({ route, navigation }) => {
     }
 
     async function loadCar() {
+      setConfort([]);
+      setSecurity([]);
+      setMultimedia([]);
+      setExternal([]);
+      setOthers([]);
+
       //Confort
       if (car.ads.ar_condicionado == '1') {
         setConfort((confort) => [...confort, 'Ar Condicionado']);
@@ -231,32 +239,33 @@ const Details = ({ route, navigation }) => {
 
   const PhotosItem = () => {
     const photos = car.ads?.photo.length !== null ? car.ads.photo : null;
-    return photos.map(({ idpic, thumbnail }) => {
+    if (photos.length > 0) {
+      return photos.map(({ idpic, thumbnail }) => {
+        return (
+          <TouchableOpacity key={idpic} onPress={() => onPressPhoto()}>
+            <Image
+              defaultSource={require('../../assets/spinner.gif')}
+              source={{
+                uri: urlPhotos + thumbnail.replace(/thumb_/g, ''),
+              }}
+              resizeMethod="resize"
+              resizeMode="contain"
+              style={styles.image}
+            />
+          </TouchableOpacity>
+        );
+      });
+    } else {
       return (
-        <TouchableOpacity key={idpic} onPress={() => onPressPhoto()}>
-          <Image
-            defaultSource={require('../../assets/no_photo.png')}
-            source={{
-              uri: urlPhotos + thumbnail.replace(/thumb_/g, ''),
-            }}
-            resizeMethod="resize"
-            resizeMode="contain"
-            style={styles.image}
-          />
-        </TouchableOpacity>
+        <Image
+          defaultSource={require('../../assets/no_photo.png')}
+          source={require('../../assets/no_photo.png')}
+          resizeMethod="resize"
+          resizeMode="contain"
+          style={styles.image}
+        />
       );
-    });
-  };
-
-  const onPressPhoto = () => {
-    Alert.alert('clicado');
-  };
-
-  const RenderConfort = () => {
-    console.log(confort);
-    console.log(confort.length);
-    return <Text>Olá</Text>;
-    //return confort.map();
+    }
   };
 
   const ElementPhotos = () => {
@@ -285,124 +294,276 @@ const Details = ({ route, navigation }) => {
     );
   };
 
-  // <Text style={styles.title}>Detalhes</Text>
-  // <View style={styles.detailsContainer}>
-  //   <View style={styles.detailsRow}>
-  //     <View style={styles.detailsItem}>
-  //       <Icon
-  //         name="car-estate"
-  //         color="white"
-  //         size={30}
-  //         style={styles.detailsIcon}
-  //       />
-  //       <Text style={styles.detailsText}>
-  //         {car.ads.carroceria != ''
-  //           ? car.ads.carroceria.toUpperCase()
-  //           : '-'}
-  //       </Text>
-  //     </View>
-
-  //     <View style={styles.detailsItem}>
-  //       <Icon
-  //         name="calendar-month"
-  //         color="white"
-  //         size={30}
-  //         style={styles.detailsIcon}
-  //       />
-  //       <Text
-  //         style={styles.detailsText}
-  //       >{`${car.ads.ano_fabricacao}/${car.ads.ano_modelo}`}</Text>
-  //     </View>
-  //   </View>
-
-  //   <View style={styles.detailsRow}>
-  //     <View style={styles.detailsItem}>
-  //       <Icon
-  //         name="car-shift-pattern"
-  //         color="white"
-  //         size={30}
-  //         style={styles.detailsIcon}
-  //       />
-  //       <Text style={styles.detailsText}>
-  //         {car.ads.cambio != '' ? car.ads.cambio.toUpperCase() : '-'}
-  //       </Text>
-  //     </View>
-
-  //     <View style={styles.detailsItem}>
-  //       <Icon
-  //         name="counter"
-  //         color="white"
-  //         size={30}
-  //         style={styles.detailsIcon}
-  //       />
-  //       <Text style={styles.detailsText}>
-  //         {`${numeral(parseFloat(car.ads.km)).format('0,0')} KM`}
-  //       </Text>
-  //     </View>
-  //   </View>
-
-  //   <View style={styles.detailsRow}>
-  //     <View style={styles.detailsItem}>
-  //       <Icon
-  //         name="palette"
-  //         color="white"
-  //         size={30}
-  //         style={styles.detailsIcon}
-  //       />
-  //       <Text style={styles.detailsText}>{car.ads.cor}</Text>
-  //     </View>
-
-  //     <View style={styles.detailsItem}>
-  //       <Icon
-  //         name="gas-station"
-  //         color="white"
-  //         size={30}
-  //         style={styles.detailsIcon}
-  //       />
-  //       <Text style={styles.detailsText}>{car.ads.combustivel}</Text>
-  //     </View>
-  //   </View>
-
-  //   <View style={styles.detailsRow}>
-  //     <View style={styles.detailsItem}>
-  //       <Icon
-  //         name="car-door"
-  //         color="white"
-  //         size={30}
-  //         style={styles.detailsIcon}
-  //       />
-  //       <Text style={styles.detailsText}>
-  //         {`${car.ads.portas} PORTAS`}
-  //       </Text>
-  //     </View>
-
-  //     <View style={styles.detailsItem}>
-  //       <Icon
-  //         name="numeric"
-  //         color="white"
-  //         size={30}
-  //         style={styles.detailsIcon}
-  //       />
-  //       <Text style={styles.detailsText}>{`FINAL ${car.ads.placa
-  //         .substr(car.ads.placa.length - 1, 1)
-  //         .toUpperCase()}`}</Text>
-  //     </View>
-  //   </View>
-  // </View>
-
-  // <View>
-  //   <Text style={styles.title}>Conforto</Text>
-  //   <View style={styles.detailsContainer}>
-  //     {confort != '' ? console.log(confort) : null}
-  //   </View>
-  // </View>
+  const ElementPhotosModal = () => {
+    return (
+      <View>
+        <ScrollView
+          style={styles.sliderModal}
+          horizontal={true}
+          pagingEnabled={true}
+        >
+          <PhotosItem />
+        </ScrollView>
+      </View>
+    );
+  };
 
   const ElementDetails = () => {
-    return null;
+    return (
+      <View>
+        <Text style={styles.title}>Detalhes</Text>
+        <View style={styles.detailsContainer}>
+          <View style={styles.detailsRow}>
+            <View style={styles.detailsItem}>
+              <Icon
+                name="car-estate"
+                color="white"
+                size={30}
+                style={styles.detailsIcon}
+              />
+              <Text style={styles.detailsText}>
+                {car.ads.carroceria != ''
+                  ? car.ads.carroceria.toUpperCase()
+                  : '-'}
+              </Text>
+            </View>
+
+            <View style={styles.detailsItem}>
+              <Icon
+                name="calendar-month"
+                color="white"
+                size={30}
+                style={styles.detailsIcon}
+              />
+              <Text
+                style={styles.detailsText}
+              >{`${car.ads.ano_fabricacao}/${car.ads.ano_modelo}`}</Text>
+            </View>
+          </View>
+
+          <View style={styles.detailsRow}>
+            <View style={styles.detailsItem}>
+              <Icon
+                name="car-shift-pattern"
+                color="white"
+                size={30}
+                style={styles.detailsIcon}
+              />
+              <Text style={styles.detailsText}>
+                {car.ads.cambio != '' ? car.ads.cambio.toUpperCase() : '-'}
+              </Text>
+            </View>
+
+            <View style={styles.detailsItem}>
+              <Icon
+                name="counter"
+                color="white"
+                size={30}
+                style={styles.detailsIcon}
+              />
+              <Text style={styles.detailsText}>
+                {`${numeral(parseFloat(car.ads.km)).format('0,0')} KM`}
+              </Text>
+            </View>
+          </View>
+
+          <View style={styles.detailsRow}>
+            <View style={styles.detailsItem}>
+              <Icon
+                name="palette"
+                color="white"
+                size={30}
+                style={styles.detailsIcon}
+              />
+              <Text style={styles.detailsText}>{car.ads.cor}</Text>
+            </View>
+
+            <View style={styles.detailsItem}>
+              <Icon
+                name="gas-station"
+                color="white"
+                size={30}
+                style={styles.detailsIcon}
+              />
+              <Text style={styles.detailsText}>{car.ads.combustivel}</Text>
+            </View>
+          </View>
+
+          <View style={styles.detailsRow}>
+            <View style={styles.detailsItem}>
+              <Icon
+                name="car-door"
+                color="white"
+                size={30}
+                style={styles.detailsIcon}
+              />
+              <Text
+                style={styles.detailsText}
+              >{`${car.ads.portas} PORTAS`}</Text>
+            </View>
+
+            <View style={styles.detailsItem}>
+              <Icon
+                name="numeric"
+                color="white"
+                size={30}
+                style={styles.detailsIcon}
+              />
+              <Text style={styles.detailsText}>{`FINAL ${car.ads.placa
+                .substr(car.ads.placa.length - 1, 1)
+                .toUpperCase()}`}</Text>
+            </View>
+          </View>
+        </View>
+      </View>
+    );
+  };
+
+  const ElementConfort = () => {
+    if (confort.length > 0) {
+      return (
+        <View>
+          <Text style={styles.title}>Conforto</Text>
+          <View style={styles.detailsContainer}>
+            {confort.map((value, index) => {
+              return (
+                <View key={index} style={styles.detailsItem}>
+                  <Icon
+                    name="check"
+                    color="white"
+                    size={30}
+                    style={styles.detailsIcon}
+                  />
+                  <Text style={styles.detailsText}>{value.toUpperCase()}</Text>
+                </View>
+              );
+            })}
+          </View>
+        </View>
+      );
+    } else {
+      return null;
+    }
+  };
+
+  const ElementSecurity = () => {
+    if (security.length > 0) {
+      return (
+        <View>
+          <Text style={styles.title}>Segurança</Text>
+          <View style={styles.detailsContainer}>
+            {security.map((value, index) => {
+              return (
+                <View key={index} style={styles.detailsItem}>
+                  <Icon
+                    name="check"
+                    color="white"
+                    size={30}
+                    style={styles.detailsIcon}
+                  />
+                  <Text style={styles.detailsText}>{value.toUpperCase()}</Text>
+                </View>
+              );
+            })}
+          </View>
+        </View>
+      );
+    } else {
+      return null;
+    }
+  };
+
+  const ElementMultimedia = () => {
+    if (multimedia.length > 0) {
+      return (
+        <View>
+          <Text style={styles.title}>Multimídia</Text>
+          <View style={styles.detailsContainer}>
+            {multimedia.map((value, index) => {
+              return (
+                <View key={index} style={styles.detailsItem}>
+                  <Icon
+                    name="check"
+                    color="white"
+                    size={30}
+                    style={styles.detailsIcon}
+                  />
+                  <Text style={styles.detailsText}>{value.toUpperCase()}</Text>
+                </View>
+              );
+            })}
+          </View>
+        </View>
+      );
+    } else {
+      return null;
+    }
+  };
+
+  const ElementExternal = () => {
+    if (external.length > 0) {
+      return (
+        <View>
+          <Text style={styles.title}>Externo</Text>
+          <View style={styles.detailsContainer}>
+            {external.map((value, index) => {
+              return (
+                <View key={index} style={styles.detailsItem}>
+                  <Icon
+                    name="check"
+                    color="white"
+                    size={30}
+                    style={styles.detailsIcon}
+                  />
+                  <Text style={styles.detailsText}>{value.toUpperCase()}</Text>
+                </View>
+              );
+            })}
+          </View>
+        </View>
+      );
+    } else {
+      return null;
+    }
+  };
+
+  const ElementOthers = () => {
+    if (others.length > 0) {
+      return (
+        <View>
+          <Text style={styles.title}>Outros</Text>
+          <View style={styles.detailsContainer}>
+            {others.map((value, index) => {
+              return (
+                <View key={index} style={styles.detailsItem}>
+                  <Icon
+                    name="check"
+                    color="white"
+                    size={30}
+                    style={styles.detailsIcon}
+                  />
+                  <Text style={styles.detailsText}>{value.toUpperCase()}</Text>
+                </View>
+              );
+            })}
+          </View>
+        </View>
+      );
+    } else {
+      return null;
+    }
+  };
+
+  const onPressPhoto = () => {
+    if (modal) {
+      setModal(false);
+    } else {
+      setModal(true);
+    }
   };
 
   return (
-    <View style={ready == null ? styles.containerEmpty : styles.container}>
+    <View style={ready == false ? styles.containerEmpty : styles.container}>
       {ready == false ? (
         <ActivityIndicator size="large" />
       ) : (
@@ -410,7 +571,17 @@ const Details = ({ route, navigation }) => {
           <ScrollView>
             <ElementPhotos />
             <ElementDetails />
+            <ElementConfort />
+            <ElementSecurity />
+            <ElementMultimedia />
+            <ElementExternal />
+            <ElementOthers />
           </ScrollView>
+          <Modal animationType="slide" visible={modal}>
+            <View style={styles.containerModal}>
+              <ElementPhotosModal />
+            </View>
+          </Modal>
         </View>
       )}
     </View>
@@ -443,6 +614,16 @@ const styles = StyleSheet.create({
     borderColor: Colors.border,
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
+  },
+  containerModal: {
+    backgroundColor: Colors.dark_bckgrd,
+    width: '100%',
+    height: '100%',
+  },
+  sliderModal: {
+    marginHorizontal: 10,
+    width: screenWidth - 20,
+    height: '100%',
   },
   image: {
     width: screenWidth - 20,
