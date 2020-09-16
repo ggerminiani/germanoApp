@@ -11,6 +11,7 @@ import {
   Alert,
   Modal,
 } from 'react-native';
+import ImageViewer from 'react-native-image-zoom-viewer';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { getCars } from '../../services/Cars';
@@ -295,16 +296,35 @@ const Details = ({ route, navigation }) => {
   };
 
   const ElementPhotosModal = () => {
+    const menuContext = {
+      saveToLocal: 'Salvar no albúm de fotos.',
+      cancel: 'Cancelar',
+    };
+    let images = [];
+    const photos = car.ads?.photo.length !== null ? car.ads.photo : null;
+
+    if (photos.length > 0) {
+      photos.map(({ thumbnail }) => {
+        images.push({ url: urlPhotos + thumbnail.replace(/thumb_/g, '') });
+      });
+    } else {
+      images.push({
+        url: '',
+        props: {
+          source: require('../../assets/no_photo.png'),
+        },
+      });
+    }
+
     return (
-      <View>
-        <ScrollView
-          style={styles.sliderModal}
-          horizontal={true}
-          pagingEnabled={true}
-        >
-          <PhotosItem />
-        </ScrollView>
-      </View>
+      <ImageViewer
+        enableSwipeDown={true}
+        onCancel={() => setModal(false)}
+        imageUrls={images}
+        loadingRender={() => <ActivityIndicator size="large" />}
+        menuContext={menuContext}
+        pageAnimateTime={10}
+      />
     );
   };
 
