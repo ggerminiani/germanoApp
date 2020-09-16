@@ -1,14 +1,28 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, ScrollView, View } from 'react-native';
+
+import Logo from '../../components/logo';
+import ListCars from '../../components/listCars';
+
+import Colors from '../../styles/Colors';
 
 const Stock = () => {
   return (
-    <View>
-      <Text></Text>
+    <View style={styles.container}>
+      <ScrollView>
+        <Logo />
+        <ListCars />
+      </ScrollView>
     </View>
   );
 };
 
-export default Stock;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: Colors.background,
+    paddingTop: 20,
+  },
+});
 
-const styles = StyleSheet.create({});
+export default Stock;

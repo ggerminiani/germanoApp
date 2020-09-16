@@ -32,7 +32,7 @@ const Routes = () => {
   const SearchStack = createStackNavigator();
   function SearchStackScreen() {
     return (
-      <SearchStack.Navigator>
+      <SearchStack.Navigator headerMode="none">
         <SearchStack.Screen name="Pesquisar" component={Search} />
       </SearchStack.Navigator>
     );
@@ -41,7 +41,7 @@ const Routes = () => {
   const StockStack = createStackNavigator();
   function StockStackScreen() {
     return (
-      <StockStack.Navigator>
+      <StockStack.Navigator headerMode="none">
         <StockStack.Screen name="Estoque" component={Stock} />
       </StockStack.Navigator>
     );
@@ -94,10 +94,10 @@ const Routes = () => {
         }}
       />
       <Tab.Screen
-        name="Estoque"
+        name="Veículos"
         component={StockStackScreen}
         options={{
-          tabBarLabel: 'Estoque',
+          tabBarLabel: 'Veículos',
           tabBarIcon: ({ color }) => (
             <Icon name="directions-car" color={color} size={26} />
           ),
