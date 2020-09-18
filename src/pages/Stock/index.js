@@ -9,10 +9,8 @@ import Colors from '../../styles/Colors';
 const Stock = () => {
   return (
     <View style={styles.container}>
-      <ScrollView>
-        <Logo />
-        <ListCars />
-      </ScrollView>
+      <Logo />
+      <ListCars />
     </View>
   );
 };
