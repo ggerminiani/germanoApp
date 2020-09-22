@@ -7,12 +7,11 @@ import {
   FlatList,
 } from 'react-native';
 
-import ListViewItem from './listViewItem';
+import GridViewItem from './gridViewItem';
 
 import { getCars } from '../../services/Cars';
-//import { DetailsScreen } from '../../routes';
 
-const ListView = ({ search = null, onPress }) => {
+const GridView = ({ search = null, onPress }) => {
   const [carList, setCarList] = useState([]);
   const [initial, setInitial] = useState(1);
   const [loading, setLoading] = useState(false);
@@ -63,13 +62,14 @@ const ListView = ({ search = null, onPress }) => {
         <ActivityIndicator size="large" />
       ) : (
         <FlatList
+          numColumns={2}
           style={styles.list}
           data={carList}
           keyExtractor={(item) => {
             item.idcar;
           }}
           renderItem={({ item }) => (
-            <ListViewItem
+            <GridViewItem
               key={`car_${item.idcar}`}
               data={item}
               onPress={onPress}
@@ -83,8 +83,6 @@ const ListView = ({ search = null, onPress }) => {
     </View>
   );
 };
-
-export default ListView;
 
 const styles = StyleSheet.create({
   containerNull: {
@@ -104,3 +102,5 @@ const styles = StyleSheet.create({
     display: 'none',
   },
 });
+
+export default GridView;

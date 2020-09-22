@@ -8,19 +8,16 @@ import {
 } from 'react-native';
 
 import ListView from '../listView';
+import GridView from '../gridView';
 
 import Colors from '../../styles/Colors';
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const ListCars = ({ search = null }) => {
+const ListCars = ({ search = null, onPress }) => {
   const [iconGrid, setIconGrid] = useState(false);
   const changeIcon = () => {
     setIconGrid(!iconGrid);
-  };
-
-  const onPress = (e) => {
-    console.log(e);
   };
 
   return (
@@ -37,7 +34,11 @@ const ListCars = ({ search = null }) => {
           )}
         </TouchableOpacity>
       </View>
-      {!iconGrid ? <ListView onPress={(e) => onPress(e)} /> : null}
+      {!iconGrid ? (
+        <ListView onPress={onPress} />
+      ) : (
+        <GridView onPress={onPress} />
+      )}
     </View>
   );
 };

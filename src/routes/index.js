@@ -29,6 +29,15 @@ const Routes = () => {
     );
   }
 
+  /*const DetailsStack = createStackNavigator();
+  export const DetailsScreen = () => {
+    return (
+      <DetailsStack.Navigator headerMode="none">
+        <DetailsScreen.Screen name="Detalhe" component={Details} />
+      </DetailsStack.Navigator>
+    );
+  };*/
+
   const SearchStack = createStackNavigator();
   function SearchStackScreen() {
     return (
@@ -78,6 +87,7 @@ const Routes = () => {
         component={HomeStackScreen}
         options={{
           tabBarLabel: 'Home',
+          //unmountOnBlur: true,
           tabBarIcon: ({ color }) => (
             <Icon name="home" color={color} size={26} />
           ),
