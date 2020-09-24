@@ -31,7 +31,6 @@ const Routes = () => {
           component={Main}
           options={{
             tabBarLabel: 'Home',
-            //unmountOnBlur: true,
             tabBarIcon: ({ color }) => (
               <Icon name="home" color={color} size={26} />
             ),
@@ -52,6 +51,7 @@ const Routes = () => {
           component={Stock}
           options={{
             tabBarLabel: 'Veículos',
+            unmountOnBlur: true,
             tabBarIcon: ({ color }) => (
               <Icon name="directions-car" color={color} size={26} />
             ),
