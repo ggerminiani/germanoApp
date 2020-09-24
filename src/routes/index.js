@@ -5,6 +5,122 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import Main from '../pages/Main/';
+import Search from '../pages/Search/';
+import Stock from '../pages/Stock/';
+import Sell from '../pages/Sell/';
+import Contact from '../pages/Contact/';
+import Details from '../pages/Details/';
+
+import Colors from '../styles/Colors';
+
+const Routes = () => {
+  const Stack = createStackNavigator();
+
+  const BottomTab = createBottomTabNavigator();
+  const Tab = () => {
+    return (
+      <BottomTab.Navigator
+        tabBarOptions={{
+          activeBackgroundColor: Colors.border,
+          inactiveBackgroundColor: Colors.border,
+          activeTintColor: Colors.white,
+        }}
+      >
+        <BottomTab.Screen
+          name="Main"
+          component={Main}
+          options={{
+            tabBarLabel: 'Home',
+            //unmountOnBlur: true,
+            tabBarIcon: ({ color }) => (
+              <Icon name="home" color={color} size={26} />
+            ),
+          }}
+        />
+        <BottomTab.Screen
+          name="Pesquisar"
+          component={Search}
+          options={{
+            tabBarLabel: 'Pesquisar',
+            tabBarIcon: ({ color }) => (
+              <Icon name="search" color={color} size={26} />
+            ),
+          }}
+        />
+        <BottomTab.Screen
+          name="Veículos"
+          component={Stock}
+          options={{
+            tabBarLabel: 'Veículos',
+            tabBarIcon: ({ color }) => (
+              <Icon name="directions-car" color={color} size={26} />
+            ),
+          }}
+        />
+        <BottomTab.Screen
+          name="Vender"
+          component={Sell}
+          options={{
+            tabBarLabel: 'Vender',
+            tabBarIcon: ({ color }) => (
+              <Icon name="attach-money" color={color} size={26} />
+            ),
+          }}
+        />
+        <BottomTab.Screen
+          name="Contato"
+          component={Contact}
+          options={{
+            tabBarLabel: 'Contato',
+            tabBarIcon: ({ color }) => (
+              <Icon name="phone" color={color} size={26} />
+            ),
+          }}
+        />
+      </BottomTab.Navigator>
+    );
+  };
+
+  const DetailsNavigator = createStackNavigator();
+  const DetailsScreen = () => {
+    return (
+      <DetailsNavigator.Navigator>
+        <DetailsNavigator.Screen
+          name="Detalhes"
+          component={Details}
+          options={{
+            title: 'Detalhes',
+            headerBackTitle: 'Voltar',
+            headerStyle: {
+              backgroundColor: Colors.contrast,
+            },
+            headerTintColor: Colors.white,
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+          }}
+        />
+      </DetailsNavigator.Navigator>
+    );
+  };
+
+  return (
+    <Stack.Navigator headerMode="none">
+      <Stack.Screen name="Home" component={Tab} />
+      <Stack.Screen name="Detalhes" component={DetailsScreen} />
+    </Stack.Navigator>
+  );
+};
+
+export default Routes;
+
+/*import React from 'react';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createStackNavigator } from '@react-navigation/stack';
+
+import Icon from 'react-native-vector-icons/MaterialIcons';
+
+import Main from '../pages/Main/';
 
 import Search from '../pages/Search/';
 import Stock from '../pages/Stock/';
@@ -28,15 +144,6 @@ const Routes = () => {
       </HomeStack.Navigator>
     );
   }
-
-  /*const DetailsStack = createStackNavigator();
-  export const DetailsScreen = () => {
-    return (
-      <DetailsStack.Navigator headerMode="none">
-        <DetailsScreen.Screen name="Detalhe" component={Details} />
-      </DetailsStack.Navigator>
-    );
-  };*/
 
   const SearchStack = createStackNavigator();
   function SearchStackScreen() {
@@ -138,3 +245,4 @@ const Routes = () => {
 };
 
 export default Routes;
+*/

@@ -32,98 +32,6 @@ const GridViewItem = ({ data, onPress }) => {
           <View style={styles.containerData}>
             <Text style={styles.description}>{car}</Text>
 
-            <View style={styles.detailsContainer}>
-              <View style={styles.detailsRow}>
-                <View style={styles.detailsItem}>
-                  <Icon
-                    name="car-shift-pattern"
-                    color="white"
-                    size={20}
-                    style={styles.detailsIcon}
-                  />
-                  <Text style={styles.detailsText}>
-                    {data.cambio != '' ? data.cambio.toUpperCase() : '-'}
-                  </Text>
-                </View>
-
-                <View style={styles.detailsItem}>
-                  <Icon
-                    name="counter"
-                    color="white"
-                    size={20}
-                    style={styles.detailsIcon}
-                  />
-                  <Text style={styles.detailsText}>
-                    {`${numeral(parseFloat(data.km)).format('0,0')} KM`}
-                  </Text>
-                </View>
-              </View>
-
-              <View style={styles.detailsRow}>
-                <View style={styles.detailsItem}>
-                  <Icon
-                    name="palette"
-                    color="white"
-                    size={20}
-                    style={styles.detailsIcon}
-                  />
-                  <Text style={styles.detailsText}>{data.cor}</Text>
-                </View>
-
-                <View style={styles.detailsItem}>
-                  <Icon
-                    name="gas-station"
-                    color="white"
-                    size={20}
-                    style={styles.detailsIcon}
-                  />
-                  <Text style={styles.detailsText}>{data.combustivel}</Text>
-                </View>
-              </View>
-
-              <View style={styles.detailsRow}>
-                <View style={styles.detailsItem}>
-                  <Icon
-                    name="car-door"
-                    color="white"
-                    size={20}
-                    style={styles.detailsIcon}
-                  />
-                  <Text
-                    style={styles.detailsText}
-                  >{`${data.portas} PORTAS`}</Text>
-                </View>
-
-                <View style={styles.detailsItem}>
-                  <Icon
-                    name="numeric"
-                    color="white"
-                    size={20}
-                    style={styles.detailsIcon}
-                  />
-                  <Text style={styles.detailsText}>{`FINAL ${data.placa
-                    .substr(data.placa.length - 1, 1)
-                    .toUpperCase()}`}</Text>
-                </View>
-              </View>
-
-              <View style={styles.detailsRow}>
-                <View style={styles.detailsItem}>
-                  <Icon
-                    name="car-estate"
-                    color="white"
-                    size={20}
-                    style={styles.detailsIcon}
-                  />
-                  <Text style={styles.detailsText}>
-                    {data.carroceria != ''
-                      ? data.carroceria.toUpperCase()
-                      : '-'}
-                  </Text>
-                </View>
-              </View>
-            </View>
-
             <View style={styles.priceContainer}>
               <Text style={styles.price}>
                 {numeral(parseFloat(data.price)).format('$ 0,0.00')}
@@ -145,7 +53,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: Colors.border,
     borderRadius: 10,
-    marginBottom: 10,
+    margin: 3,
   },
   containerButton: {
     flex: 1,
@@ -153,18 +61,17 @@ const styles = StyleSheet.create({
   },
   containerItem: {
     flex: 1,
-    flexDirection: 'row',
+    alignItems: 'center',
   },
   image: {
-    borderRadius: 10,
+    borderRadius: 5,
     flex: 1,
-    width: '100%',
-    height: 150,
-    margin: 5,
+    width: 140,
+    height: 140,
+    marginTop: 5,
   },
   containerData: {
     flex: 1,
-    marginRight: 5,
   },
   description: {
     marginTop: 5,
@@ -185,7 +92,7 @@ const styles = StyleSheet.create({
   priceContainer: {
     backgroundColor: Colors.dolar,
     borderRadius: 3,
-    marginBottom: 5,
+    margin: 5,
   },
   detailsContainer: {
     paddingBottom: 10,

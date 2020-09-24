@@ -68,9 +68,9 @@ const GridView = ({ search = null, onPress }) => {
           keyExtractor={(item) => {
             item.idcar;
           }}
-          renderItem={({ item }) => (
+          renderItem={({ item, index }) => (
             <GridViewItem
-              key={`car_${item.idcar}`}
+              key={`grid_${index.toString()}`}
               data={item}
               onPress={onPress}
             />

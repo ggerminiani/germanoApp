@@ -68,9 +68,9 @@ const ListView = ({ search = null, onPress }) => {
           keyExtractor={(item) => {
             item.idcar;
           }}
-          renderItem={({ item }) => (
+          renderItem={({ item, index }) => (
             <ListViewItem
-              key={`car_${item.idcar}`}
+              key={`list_${index.toString()}`}
               data={item}
               onPress={onPress}
             />

@@ -25,6 +25,18 @@ let screenWidth = Dimensions.get('window').width;
 let screenHeight = Dimensions.get('window').height;
 
 const Details = ({ route, navigation }) => {
+  // useFocusEffect(
+  //   React.useCallback(() => {
+  //     //alert('Screen was focused');
+  //     // Do something when the screen is focused
+  //     return () => {
+  //       //alert('Screen was unfocused');
+  //       // Do something when the screen is unfocused
+  //       // Useful for cleanup functions
+  //     };
+  //   }, [])
+  // );
+
   const { idCar } = route.params;
   const [car, setCar] = useState(null);
   const [confort, setConfort] = useState([]);
@@ -40,6 +52,9 @@ const Details = ({ route, navigation }) => {
       const data = await getCars({ type: 'get_car', id: idCar });
       if (data !== undefined && data !== null && data.status == 'successful') {
         setCar(data);
+        navigation.setOptions({
+          title: `${data.ads.marca} ${data.ads.modelo}`,
+        });
       }
     }
 
@@ -238,6 +253,21 @@ const Details = ({ route, navigation }) => {
     }
   }, [car]);
 
+  const km = () => {
+    let year = new Date();
+    year = year.getFullYear() - 2;
+
+    if (year > car.ads.ano_fabricacao) {
+      if (car.ads.km == '0') {
+        return '- KM';
+      } else {
+        return `${numeral(parseFloat(car.ads.km)).format('0,0')} KM`;
+      }
+    } else {
+      return `${numeral(parseFloat(car.ads.km)).format('0,0')} KM`;
+    }
+  };
+
   const PhotosItem = () => {
     const photos = car.ads?.photo.length !== null ? car.ads.photo : null;
     if (photos.length > 0) {
@@ -336,7 +366,25 @@ const Details = ({ route, navigation }) => {
           <View style={styles.detailsRow}>
             <View style={styles.detailsItem}>
               <Icon
-                name="car-estate"
+                name={
+                  car.ads.carroceria == ''
+                    ? 'car-side'
+                    : car.ads.carroceria.toUpperCase() == 'SEDÃ'
+                    ? 'car-side'
+                    : car.ads.carroceria.toUpperCase() == 'HATCH'
+                    ? 'car-hatchback'
+                    : car.ads.carroceria.toUpperCase() == 'COUPÉ'
+                    ? 'car-sports'
+                    : car.ads.carroceria.toUpperCase() == 'CONVERSÍVEL'
+                    ? 'car-convertible'
+                    : car.ads.carroceria.toUpperCase() == 'CABRIOLET'
+                    ? 'car-convertible'
+                    : car.ads.carroceria.toUpperCase() == 'PICK-UP'
+                    ? 'car-pickup'
+                    : car.ads.carroceria.toUpperCase() == 'SUV / CROSSOVER'
+                    ? 'car-estate'
+                    : 'car-side'
+                }
                 color="white"
                 size={30}
                 style={styles.detailsIcon}
@@ -381,9 +429,7 @@ const Details = ({ route, navigation }) => {
                 size={30}
                 style={styles.detailsIcon}
               />
-              <Text style={styles.detailsText}>
-                {`${numeral(parseFloat(car.ads.km)).format('0,0')} KM`}
-              </Text>
+              <Text style={styles.detailsText}>{`${km()}`}</Text>
             </View>
           </View>
 
@@ -613,11 +659,9 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.background,
     justifyContent: 'center',
-    paddingTop: 20,
   },
   container: {
     flex: 1,
-    paddingTop: 20,
     backgroundColor: Colors.background,
   },
   containerImage: {

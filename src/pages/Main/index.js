@@ -63,7 +63,10 @@ const Main = ({ navigation }) => {
   }, [news, spotlights, commons]);
 
   const onPressNews = (e) => {
-    navigation.navigate('Detalhes', { idCar: e });
+    navigation.navigate('Detalhes', {
+      screen: 'Detalhes',
+      params: { idCar: e },
+    });
   };
 
   return (

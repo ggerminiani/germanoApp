@@ -156,9 +156,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   image: {
-    borderRadius: 10,
+    borderRadius: 5,
     flex: 1,
-    width: '100%',
+    width: 150,
     height: 150,
     margin: 5,
   },

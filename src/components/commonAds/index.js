@@ -42,9 +42,9 @@ const CommonAds = ({ name, data, onPress, limitAds = 10 }) => {
     <View>
       <Text style={styles.title}>{name}</Text>
       <View style={styles.container}>
-        <ScrollView style={styles.slider} pagingEnabled={true}>
-          {items !== null ? items : null}
-        </ScrollView>
+        {/* <ScrollView style={styles.slider} pagingEnabled={true}> */}
+        {items !== null ? items : null}
+        {/* </ScrollView> */}
       </View>
     </View>
   );
@@ -53,10 +53,10 @@ const CommonAds = ({ name, data, onPress, limitAds = 10 }) => {
 const styles = StyleSheet.create({
   container: {
     marginHorizontal: 10,
-    backgroundColor: Colors.contrast,
-    borderWidth: 2,
-    borderColor: Colors.border,
-    borderRadius: 10,
+    //backgroundColor: Colors.contrast,
+    //borderWidth: 2,
+    //borderColor: Colors.contrast,
+    //borderRadius: 10,
     marginBottom: 10,
     shadowColor: '#000',
     shadowOffset: {

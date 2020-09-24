@@ -13,6 +13,21 @@ const CommonAdsItem = ({ data, onPress }) => {
       : { uri: urlPhotos + data.photo };
   const car = `${data.brand} ${data.model} ${data.version}`;
 
+  const km = () => {
+    let year = new Date();
+    year = year.getFullYear() - 2;
+
+    if (year > data.yMade) {
+      if (data.km == 0) {
+        return '';
+      } else {
+        return `- ${numeral(parseFloat(data.km)).format('0,0')} KM`;
+      }
+    } else {
+      return `- ${numeral(parseFloat(data.km)).format('0,0')} KM`;
+    }
+  };
+
   return (
     <View style={styles.container}>
       <TouchableOpacity
@@ -27,6 +42,13 @@ const CommonAdsItem = ({ data, onPress }) => {
           />
           <View style={styles.containerData}>
             <Text style={styles.description}>{car}</Text>
+            <Text style={styles.subDescription}>
+              {`${data.yMade}/${data.yModel} - ${data.combustivel} ${km()}`}
+            </Text>
+            <Text style={styles.subDescription}>
+              {`${data.cor} - ${data.portas} PORTAS`}
+            </Text>
+
             <View style={styles.priceContainer}>
               <Text style={styles.price}>
                 {numeral(parseFloat(data.price)).format('$ 0,0.00')}
@@ -43,10 +65,12 @@ const styles = StyleSheet.create({
   item: {
     flexDirection: 'row',
     flex: 1,
-    marginVertical: 3,
+    marginVertical: 5,
     backgroundColor: Colors.dark_bckgrd,
     padding: 5,
     borderRadius: 10,
+    borderWidth: 2,
+    borderColor: Colors.contrast,
   },
   container: {
     flex: 1,
@@ -55,7 +79,7 @@ const styles = StyleSheet.create({
   image: {
     width: 100,
     height: 100,
-    borderRadius: 10,
+    borderRadius: 5,
   },
   containerData: {
     flex: 1,
@@ -65,13 +89,20 @@ const styles = StyleSheet.create({
   description: {
     marginTop: 5,
     fontSize: 14,
+    fontWeight: '700',
+    color: Colors.text,
+    textAlign: 'left',
+    flex: 1,
+  },
+  subDescription: {
+    fontSize: 12,
     color: Colors.text,
     textAlign: 'left',
     flex: 1,
   },
   priceContainer: {
     backgroundColor: Colors.dolar,
-    borderRadius: 10,
+    borderRadius: 5,
     flex: 1,
     justifyContent: 'center',
   },
