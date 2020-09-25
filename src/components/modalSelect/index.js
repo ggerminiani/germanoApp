@@ -1,19 +1,56 @@
-import React, { useEffect, useState } from 'react';
-import { Modal, StyleSheet, View, TouchableOpacity, Text } from 'react-native';
+import React, { useState } from 'react';
+import {
+  Modal,
+  StyleSheet,
+  View,
+  FlatList,
+  TouchableOpacity,
+  Text,
+} from 'react-native';
 
 import FindItem from '../findItem';
 
 import Color from '../../styles/Colors';
 
-const ModalSelect = ({ data, title = 'Modal' }) => {
+const ModalSelect = ({
+  data = null,
+  title = 'Modal',
+  placeHolder = 'Selecione',
+}) => {
   const [show, setShow] = useState(false);
+  const [filteredData, setFilteredData] = useState(null);
 
-  useEffect(() => {}, [data]);
+  onChangeText = (e) => {
+    if (e == '') {
+      setFilteredData(data);
+    } else {
+      const results = data.map((item) => {
+        return (
+          item.brand
+            .normalize('NFD')
+            .replace(/[\u0300-\u036F]/g, '')
+            .toUpperCase()
+            .trim()
+            .indexOf(
+              e
+                .normalize('NFD')
+                .replace(/[\u0300-\u036F]/g, '')
+                .toUpperCase()
+                .trim()
+            ) > -1
+        );
+      });
+
+      setFilteredData(results);
+      console.log(filteredData);
+      //console.log(filteredData);
+    }
+  };
 
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.button} onPress={() => setShow(true)}>
-        <Text style={styles.text}>Selecionar Marca</Text>
+        <Text style={styles.text}>{placeHolder}</Text>
       </TouchableOpacity>
       <Modal
         visible={show}
@@ -23,7 +60,11 @@ const ModalSelect = ({ data, title = 'Modal' }) => {
       >
         <View style={styles.modalContainer}>
           <Text style={styles.modalTitle}>{title}</Text>
-          <FindItem />
+
+          <FindItem onChangeText={(e) => onChangeText(e)} />
+
+          <FlatList data={filteredData} />
+
           <TouchableOpacity
             style={styles.modalButton}
             onPress={() => setShow(false)}
