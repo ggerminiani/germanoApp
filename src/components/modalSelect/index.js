@@ -43,7 +43,6 @@ const ModalSelect = ({
 
       setFilteredData(results);
       console.log(filteredData);
-      //console.log(filteredData);
     }
   };
 
