@@ -15,6 +15,7 @@ const SliderView = ({ name, data, onPress }) => {
   const maxX = (screenWidth - 40) * (data.ads.length - 1);
 
   const timer = () => {
+    console.log('timer');
     let scrollX = 0;
 
     setInterval(() => {
@@ -29,9 +30,9 @@ const SliderView = ({ name, data, onPress }) => {
 
   useEffect(() => {
     const renderItems = () => {
-      let items = [];
+      let itemsLoad = [];
       for (let x = 0; x < data.ads.length; x++) {
-        items.push(
+        itemsLoad.push(
           <SliderViewItem
             key={`${name}_${x}`}
             data={data.ads[x]}
@@ -39,10 +40,13 @@ const SliderView = ({ name, data, onPress }) => {
           />
         );
       }
-      setItems(items);
+
+      setItems(itemsLoad);
+
       if (startTimer) {
-        timer();
-        setstartTimer(false);
+        //Uncomment THIS
+        // timer();
+        // setstartTimer(false);
       }
     };
 

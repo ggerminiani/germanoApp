@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Modal,
   StyleSheet,
@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 
 import FindItem from '../findItem';
+import FlatItem from './modalSelectItem';
 
 import Color from '../../styles/Colors';
 
@@ -16,33 +17,41 @@ const ModalSelect = ({
   data = null,
   title = 'Modal',
   placeHolder = 'Selecione',
+  onPress,
 }) => {
+  useEffect(() => {
+    if (data !== null) {
+      setFilteredData(data);
+    }
+  }, [data, filteredData]);
+
   const [show, setShow] = useState(false);
   const [filteredData, setFilteredData] = useState(null);
 
   onChangeText = (e) => {
-    if (e == '') {
+    if (e === '') {
       setFilteredData(data);
     } else {
-      const results = data.map((item) => {
-        return (
+      let results = [];
+      data.map((item) => {
+        if (
           item.brand
             .normalize('NFD')
             .replace(/[\u0300-\u036F]/g, '')
             .toUpperCase()
             .trim()
-            .indexOf(
+            .includes(
               e
                 .normalize('NFD')
                 .replace(/[\u0300-\u036F]/g, '')
                 .toUpperCase()
                 .trim()
-            ) > -1
-        );
+            )
+        ) {
+          results.push({ idbrand: item.idbrand, brand: item.brand });
+        }
       });
-
       setFilteredData(results);
-      console.log(filteredData);
     }
   };
 
@@ -62,7 +71,22 @@ const ModalSelect = ({
 
           <FindItem onChangeText={(e) => onChangeText(e)} />
 
-          <FlatList data={filteredData} />
+          <FlatList
+            style={styles.flatlist}
+            data={filteredData}
+            keyExtractor={(item) => item.idbrand}
+            renderItem={({ item, index }) => {
+              return (
+                <FlatItem
+                  item={item}
+                  onPress={(e) => {
+                    onPress(e);
+                    setShow(false);
+                  }}
+                />
+              );
+            }}
+          />
 
           <TouchableOpacity
             style={styles.modalButton}
@@ -123,7 +147,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   modalButton: {
-    backgroundColor: Color.dark_bckgrd,
+    backgroundColor: Color.white,
     marginHorizontal: 15,
     marginVertical: 5,
     marginTop: 10,
@@ -144,9 +168,13 @@ const styles = StyleSheet.create({
   },
   modalText: {
     fontSize: 18,
-    color: Color.white,
+    color: Color.dark_bckgrd,
     textAlign: 'center',
     padding: 5,
+  },
+  flatlist: {
+    flex: 1,
+    marginHorizontal: 15,
   },
 });
 

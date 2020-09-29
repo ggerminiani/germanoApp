@@ -12,6 +12,7 @@ import Colors from '../../styles/Colors';
 const Search = () => {
   const [textSearch, setTextSearch] = useState('');
   const [brand, setBrand] = useState('');
+  const [brandId, setBrandId] = useState('');
   const [brandData, setBrandData] = useState(null);
   const [modelData, setModelData] = useState(null);
 
@@ -23,13 +24,22 @@ const Search = () => {
       }
     }
 
+    async function loadModel(id) {}
+
     if (brandData === null) {
       loadBrand();
+    } else {
+      loadModel(brandId);
     }
-  }, [modelData]);
+  }, [brandData, modelData]);
 
   const onChangeText = (e) => {
     setTextSearch(e);
+  };
+
+  const onPressBrand = (e) => {
+    setBrand(e.brand);
+    setBrandId(e.idbrand);
   };
 
   return (
@@ -37,10 +47,21 @@ const Search = () => {
       <Logo />
       <Text style={styles.title}>Filtro de Busca</Text>
       <SearchItem onChangeText={(e) => onChangeText(e)} />
+      <Text
+        style={{
+          textAlign: 'center',
+          color: Colors.white,
+          marginVertical: 2,
+          marginTop: 5,
+        }}
+      >
+        - - - OU - - -
+      </Text>
       <SelectBrand
         title="Marca"
         placeHolder={brand === '' ? 'Selecionar Marca' : brand}
         data={brandData}
+        onPress={(e) => onPressBrand(e)}
       />
     </View>
   );
