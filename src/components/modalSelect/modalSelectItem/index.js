@@ -7,7 +7,7 @@ const ModalSelectItem = ({ item, onPress }) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={(e) => onPress(item)}>
-        <Text style={styles.text}>{item.brand.toUpperCase().trim()}</Text>
+        <Text style={styles.text}>{item.info.toUpperCase().trim()}</Text>
       </TouchableOpacity>
     </View>
   );
@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: Color.white,
     textAlign: 'center',
-    padding: 5,
+    padding: 10,
   },
 });
 

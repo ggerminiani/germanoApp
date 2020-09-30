@@ -41,7 +41,7 @@ const Routes = () => {
           component={Search}
           options={{
             tabBarLabel: 'Pesquisar',
-            unmountOnBlur: true,
+            //unmountOnBlur: true,
             tabBarIcon: ({ color }) => (
               <Icon name="search" color={color} size={26} />
             ),

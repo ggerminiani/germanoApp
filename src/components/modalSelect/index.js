@@ -35,7 +35,7 @@ const ModalSelect = ({
       let results = [];
       data.map((item) => {
         if (
-          item.brand
+          item.info
             .normalize('NFD')
             .replace(/[\u0300-\u036F]/g, '')
             .toUpperCase()
@@ -48,7 +48,7 @@ const ModalSelect = ({
                 .trim()
             )
         ) {
-          results.push({ idbrand: item.idbrand, brand: item.brand });
+          results.push({ id: item.id, info: item.info });
         }
       });
       setFilteredData(results);
@@ -74,7 +74,7 @@ const ModalSelect = ({
           <FlatList
             style={styles.flatlist}
             data={filteredData}
-            keyExtractor={(item) => item.idbrand}
+            keyExtractor={(item) => item.id}
             renderItem={({ item, index }) => {
               return (
                 <FlatItem
@@ -168,6 +168,7 @@ const styles = StyleSheet.create({
   },
   modalText: {
     fontSize: 18,
+    fontWeight: '600',
     color: Color.dark_bckgrd,
     textAlign: 'center',
     padding: 5,

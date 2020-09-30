@@ -14,7 +14,7 @@ const Stock = ({ navigation, route }) => {
       params: { idCar: e },
     });
   };
-
+  //console.log(route.params);
   return (
     <View style={styles.container}>
       <Logo />
