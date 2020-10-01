@@ -11,7 +11,9 @@ import GridViewItem from './gridViewItem';
 
 import { getCars } from '../../services/Cars';
 
-const GridView = ({ search = null, onPress }) => {
+const GridView = ({ search, onPress }) => {
+  const { type, fileds_search, text_search } = search;
+
   const [carList, setCarList] = useState([]);
   const [initial, setInitial] = useState(1);
   const [loading, setLoading] = useState(false);
@@ -22,7 +24,7 @@ const GridView = ({ search = null, onPress }) => {
   }, [initial]);
 
   async function loadList() {
-    if (search === null) {
+    if (search.type == undefined) {
       const data = await getCars({
         type: 'get_all',
         initial,
@@ -34,7 +36,13 @@ const GridView = ({ search = null, onPress }) => {
         setLoading(false);
       }
     } else {
-      const data = await getCars({ type: 'get_all', query: 'query' });
+      const data = await getCars({
+        type,
+        fileds_search,
+        text_search,
+        initial,
+        offset,
+      });
       if (data !== undefined && data !== null && data.length > 0) {
         setCarList(carList.concat(data));
       } else {

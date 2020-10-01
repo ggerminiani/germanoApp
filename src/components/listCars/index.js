@@ -14,7 +14,7 @@ import Colors from '../../styles/Colors';
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const ListCars = ({ search = null, onPress }) => {
+const ListCars = ({ search, onPress }) => {
   const [iconGrid, setIconGrid] = useState(false);
   const changeIcon = () => {
     setIconGrid(!iconGrid);
@@ -24,7 +24,9 @@ const ListCars = ({ search = null, onPress }) => {
     <View style={styles.container}>
       <View style={styles.containerTitle}>
         <Text style={styles.titleText}>
-          {search === null ? 'Listagem de Veículos' : 'Resultado de Pesquisa'}
+          {search.type == undefined
+            ? 'Listagem de Veículos'
+            : 'Resultado de Pesquisa'}
         </Text>
         <TouchableOpacity onPress={changeIcon} style={styles.titleIcon}>
           {iconGrid ? (
@@ -35,9 +37,9 @@ const ListCars = ({ search = null, onPress }) => {
         </TouchableOpacity>
       </View>
       {!iconGrid ? (
-        <ListView onPress={onPress} />
+        <ListView search={search} onPress={onPress} />
       ) : (
-        <GridView onPress={onPress} />
+        <GridView search={search} onPress={onPress} />
       )}
     </View>
   );

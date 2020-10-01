@@ -50,6 +50,7 @@ const Routes = () => {
         <BottomTab.Screen
           name="Veículos"
           component={Stock}
+          initialParams={{ search: {} }}
           options={{
             tabBarLabel: 'Veículos',
             unmountOnBlur: true,

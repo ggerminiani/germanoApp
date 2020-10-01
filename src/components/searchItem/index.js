@@ -1,10 +1,18 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { StyleSheet, Text, View, TextInput } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import Color from '../../styles/Colors';
 
-const SerachItem = ({ onChangeText }) => {
+const SerachItem = ({ onChangeText, onSubmitEditing, clear }) => {
+  const refInput = useRef(null);
+
+  useEffect(() => {
+    if (clear) {
+      refInput.current.setNativeProps({ text: '' });
+    }
+  }, [clear]);
+
   return (
     <View style={styles.container}>
       <Icon name="magnify" size={40} color={Color.white} style={styles.icon} />
@@ -14,6 +22,8 @@ const SerachItem = ({ onChangeText }) => {
         placeholder={'Digite uma marca, modelo, versão...'}
         placeholderTextColor={Color.inactive}
         multiline={false}
+        onSubmitEditing={onSubmitEditing}
+        ref={refInput}
       />
     </View>
   );

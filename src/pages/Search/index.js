@@ -28,12 +28,15 @@ const Search = ({ navigation }) => {
     let year = new Date();
     return year.getFullYear();
   };
+  const maxPrice = 120000;
+  const maxKm = 500000;
 
   const refKm = useRef(null);
   const refYear = useRef(null);
   const refPrice = useRef(null);
 
   const [textSearch, setTextSearch] = useState('');
+  const [textClear, setTextClear] = useState(true);
   const [brand, setBrand] = useState(null);
   const [brandData, setBrandData] = useState(null);
   const [model, setModel] = useState(null);
@@ -41,9 +44,9 @@ const Search = ({ navigation }) => {
   const [carColors, setCarColors] = useState(null);
   const [carTransmission, setcarTransmission] = useState(null);
   const [carPetrol, setcarPetrol] = useState(null);
-  const [carKm, setCarKm] = useState(0);
-  const [carYear, setCarYear] = useState(maxYear());
-  const [carPrice, setCarPrice] = useState(120000);
+  const [carKm, setCarKm] = useState(maxKm);
+  const [carYear, setCarYear] = useState(minYear());
+  const [carPrice, setCarPrice] = useState(maxPrice);
 
   const carColorsData = [
     { id: 1, info: 'AMARELO' },
@@ -99,7 +102,9 @@ const Search = ({ navigation }) => {
         loadModel(brand.id);
       }
     }
-  }, [brand, model]);
+
+    setTextClear(false);
+  }, [brand, model, textClear]);
 
   const onChangeText = (e) => {
     setTextSearch(e);
@@ -127,27 +132,96 @@ const Search = ({ navigation }) => {
   };
 
   const onPressClean = () => {
+    setTextClear(true);
     setTextSearch('');
     setBrand(null);
     setModel(null);
     setCarColors(null);
     setcarTransmission(null);
     setcarPetrol(null);
-    setCarKm(null);
-    setCarYear(maxYear());
-    setCarPrice(120000);
-    refKm.current.setNativeProps({ value: 0 });
-    refYear.current.setNativeProps({ value: maxYear() });
-    refPrice.current.setNativeProps({ value: 120000 });
+    setCarKm(maxKm);
+    setCarYear(minYear());
+    setCarPrice(maxPrice);
+    refKm.current.setNativeProps({ value: maxKm });
+    refYear.current.setNativeProps({ value: minYear() });
+    refPrice.current.setNativeProps({ value: maxPrice });
 
     Alert.alert('Filtros limpos');
   };
 
   const onPressSearch = () => {
+    let search = '';
+
+    search += brand?.id
+      ? inputSearchQuery(search, `veiculo.id_marca = ${brand?.id}`)
+      : '';
+
+    search += model?.info
+      ? inputSearchQuery(search, `veiculo.id_modelo = ${model?.id}`)
+      : '';
+
+    search += carColors?.info
+      ? inputSearchQuery(search, `veiculo.cor like "%${carColors?.info}%"`)
+      : '';
+
+    search += carTransmission?.info
+      ? inputSearchQuery(
+          search,
+          `veiculo.cambio like "%${carTransmission?.info}%"`
+        )
+      : '';
+
+    search += carPetrol?.info
+      ? inputSearchQuery(
+          search,
+          `veiculo.combustivel like "%${carPetrol?.info}%"`
+        )
+      : '';
+
+    search +=
+      carKm !== maxKm ? inputSearchQuery(search, `veiculo.km <= ${carKm}`) : '';
+
+    search +=
+      carYear !== minYear()
+        ? inputSearchQuery(search, `veiculo.ano_fabricacao >= ${carYear}`)
+        : '';
+
+    search +=
+      carPrice !== maxPrice
+        ? inputSearchQuery(search, `anuncio.valor <= ${carPrice}`)
+        : '';
+
+    search = 'and ' + search;
+    search = { type: 'get_search', text_search: '', fileds_search: search };
+
     navigation.navigate('Home', {
       screen: 'Veículos',
-      params: { test: 'testando' },
+      params: { search },
     });
+  };
+
+  const inputSearchQuery = (query, string) => {
+    if (query == '') {
+      return string;
+    } else {
+      return ` and ${string}`;
+    }
+  };
+
+  const onSubmitEditing = () => {
+    if (textSearch !== '') {
+      let search = '';
+      search = {
+        type: 'get_search',
+        text_search: textSearch,
+        fileds_search: '',
+      };
+
+      navigation.navigate('Home', {
+        screen: 'Veículos',
+        params: { search },
+      });
+    }
   };
 
   return (
@@ -155,7 +229,11 @@ const Search = ({ navigation }) => {
       <Logo />
       <Text style={styles.title}>Filtro de Busca</Text>
       <ScrollView>
-        <SearchItem onChangeText={(e) => onChangeText(e)} />
+        <SearchItem
+          onChangeText={(e) => onChangeText(e)}
+          onSubmitEditing={onSubmitEditing}
+          clear={textClear}
+        />
         <Text
           style={[
             styles.subtitle,
@@ -191,7 +269,7 @@ const Search = ({ navigation }) => {
           title="Câmbio"
           placeHolder={carPetrol === null ? 'Qualquer Câmbio' : carPetrol.info}
           data={carPetrolData}
-          onPress={(e) => onPressPetrol(e)}
+          onPress={(e) => onPressTransmission(e)}
         />
         <SelectModal
           title="Combustível"
@@ -201,13 +279,13 @@ const Search = ({ navigation }) => {
               : carTransmission.info
           }
           data={carTransmissionData}
-          onPress={(e) => onPressTransmission(e)}
+          onPress={(e) => onPressPetrol(e)}
         />
         <Text style={styles.subtitle}>
           Quilometragem:{' '}
           {carKm === 0
             ? '0 Km'
-            : carKm !== 500000
+            : carKm !== maxKm
             ? `até ${numeral(carKm).format('0,0')} Km`
             : `qualquer km`}
         </Text>
@@ -215,8 +293,8 @@ const Search = ({ navigation }) => {
           ref={refKm}
           style={styles.slider}
           minimumValue={0}
-          maximumValue={500000}
-          value={0}
+          maximumValue={maxKm}
+          value={maxKm}
           step={10000}
           onValueChange={(e) => setCarKm(e)}
           minimumTrackTintColor={Colors.white}
@@ -229,7 +307,7 @@ const Search = ({ navigation }) => {
           {carYear === maxYear()
             ? carYear
             : carYear !== minYear()
-            ? `até ${carYear}`
+            ? `a partir de ${carYear}`
             : `qualquer ano`}
         </Text>
         <Slider
@@ -239,7 +317,7 @@ const Search = ({ navigation }) => {
           maximumValue={maxYear()}
           inverted={true}
           step={1}
-          value={maxYear()}
+          value={minYear()}
           onValueChange={(e) => setCarYear(e)}
           minimumTrackTintColor={Colors.black}
           maximumTrackTintColor={Colors.white}
@@ -248,16 +326,16 @@ const Search = ({ navigation }) => {
 
         <Text style={styles.subtitle}>
           Preço:{' '}
-          {carPrice !== 120000
+          {carPrice !== maxPrice
             ? `até ${numeral(carPrice).format('$ 0,00.00')}`
             : `qualquer preço`}
         </Text>
         <Slider
           ref={refPrice}
           style={styles.slider}
-          value={120000}
+          value={maxPrice}
           minimumValue={5000}
-          maximumValue={120000}
+          maximumValue={maxPrice}
           step={5000}
           onValueChange={(e) => setCarPrice(e)}
           minimumTrackTintColor={Colors.white}
