@@ -191,7 +191,10 @@ const Search = ({ navigation }) => {
         ? inputSearchQuery(search, `anuncio.valor <= ${carPrice}`)
         : '';
 
-    search = 'and ' + search;
+    if (search !== '') {
+      search = 'and ' + search;
+    }
+
     search = { type: 'get_search', text_search: '', fileds_search: search };
 
     navigation.navigate('Home', {
@@ -269,7 +272,7 @@ const Search = ({ navigation }) => {
           title="Câmbio"
           placeHolder={carPetrol === null ? 'Qualquer Câmbio' : carPetrol.info}
           data={carPetrolData}
-          onPress={(e) => onPressTransmission(e)}
+          onPress={(e) => onPressPetrol(e)}
         />
         <SelectModal
           title="Combustível"
@@ -279,7 +282,7 @@ const Search = ({ navigation }) => {
               : carTransmission.info
           }
           data={carTransmissionData}
-          onPress={(e) => onPressPetrol(e)}
+          onPress={(e) => onPressTransmission(e)}
         />
         <Text style={styles.subtitle}>
           Quilometragem:{' '}

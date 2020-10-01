@@ -10,6 +10,7 @@ import {
 import ListViewItem from './listViewItem';
 
 import { getCars } from '../../services/Cars';
+import { Colors } from 'react-native/Libraries/NewAppScreen';
 //import { DetailsScreen } from '../../routes';
 
 const ListView = ({ search, onPress }) => {
@@ -17,7 +18,8 @@ const ListView = ({ search, onPress }) => {
 
   const [carList, setCarList] = useState([]);
   const [initial, setInitial] = useState(1);
-  const [loading, setLoading] = useState(false);
+  const [loadingMore, setLoadingMore] = useState(false);
+  const [loading, setLoading] = useState(true);
   const offset = 6;
 
   useEffect(() => {
@@ -33,8 +35,10 @@ const ListView = ({ search, onPress }) => {
       });
       if (data !== undefined && data !== null && data.length > 0) {
         setCarList(carList.concat(data));
+        setLoading(false);
       } else {
         setLoading(false);
+        setLoadingMore(false);
       }
     } else {
       const data = await getCars({
@@ -46,29 +50,46 @@ const ListView = ({ search, onPress }) => {
       });
       if (data !== undefined && data !== null && data.length > 0) {
         setCarList(carList.concat(data));
+        setLoading(false);
       } else {
         setLoading(false);
+        setLoadingMore(false);
       }
     }
   }
 
+  console.log(carList);
+
   const renderFooter = () => {
     return (
-      <View style={loading ? styles.loadMore : styles.notShow}>
-        <ActivityIndicator size="large" />
+      <View style={loadingMore ? styles.loadMore : styles.notShow}>
+        <ActivityIndicator size="small" color={Colors.white} />
       </View>
     );
   };
 
   const handleLoadMore = () => {
-    setLoading(true);
-    setInitial(initial + offset);
+    if (carList.length >= 6) {
+      setLoadingMore(true);
+      setInitial(initial + offset);
+    }
   };
 
   return (
     <View style={carList.length == 0 ? styles.containerNull : styles.container}>
-      {carList.length == 0 ? (
-        <ActivityIndicator size="large" />
+      {loading ? (
+        <ActivityIndicator size="large" color={Colors.white} />
+      ) : carList.length === 0 ? (
+        <Text
+          style={{
+            textAlign: 'center',
+            fontSize: 18,
+            color: Colors.white,
+            top: -30,
+          }}
+        >
+          Nenhum veículo encontrado
+        </Text>
       ) : (
         <FlatList
           style={styles.list}
