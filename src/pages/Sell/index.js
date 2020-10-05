@@ -7,8 +7,10 @@ import {
   KeyboardAvoidingView,
 } from 'react-native';
 
+//import CheckBox from '@react-native-community/checkbox';
+import CheckBox from 'react-native-check-box';
+
 import { TextInputMask } from 'react-native-masked-text';
-//import BEMCheckBox from 'react-native-bem-check-box';
 
 import Logo from '../../components/logo';
 import SelectModal from '../../components/modalSelect';
@@ -27,6 +29,7 @@ const Sell = () => {
   const [year, setYear] = useState(null);
   const [color, setColor] = useState(null);
   const [km, setKm] = useState('Digite quantos Km');
+  const [checkAr, setcheckAr] = useState(false);
 
   const colorData = [
     { id: 1, info: 'AMARELO' },
@@ -182,7 +185,14 @@ const Sell = () => {
               </View>
 
               <View>
-                {/* <BEMCheckBox onValueChange={(value) => console.log(value)} /> */}
+                <CheckBox
+                  onClick={() => {
+                    setcheckAr(!checkAr);
+                  }}
+                  isChecked={checkAr}
+                  leftText={'CheckBox'}
+                  checkBoxColor={Colors.white}
+                />
               </View>
             </View>
           )}
