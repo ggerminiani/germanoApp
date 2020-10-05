@@ -64,6 +64,7 @@ const Routes = () => {
           component={Sell}
           options={{
             tabBarLabel: 'Vender',
+            unmountOnBlur: true,
             tabBarIcon: ({ color }) => (
               <Icon name="attach-money" color={color} size={26} />
             ),

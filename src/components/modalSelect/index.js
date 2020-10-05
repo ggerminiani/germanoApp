@@ -58,7 +58,7 @@ const ModalSelect = ({
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.button} onPress={() => setShow(true)}>
-        <Text style={styles.text}>{placeHolder}</Text>
+        <Text style={styles.text}>{placeHolder.toUpperCase()}</Text>
       </TouchableOpacity>
       <Modal
         visible={show}

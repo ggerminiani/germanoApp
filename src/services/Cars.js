@@ -25,16 +25,19 @@ export const getCars = async (data) => {
 
 export const getFIPE = async (data) => {
   let url = urlFIPE + data.urlComplement;
-  console.log(url);
+
   const response = await axios
     .get(url, { timeout: 60000 })
     .then(function (response) {
       let data = [];
-      response.data.map((item) => {
-        data.push({ id: item.id, info: item.name });
-      });
-      console.log(data);
-      return data;
+      if (response.data.length === undefined) {
+        return response.data;
+      } else {
+        response.data.map((item) => {
+          data.push({ id: item.id, info: item.name });
+        });
+        return data;
+      }
     })
     .catch(function (error) {
       if (error.toString().toLowerCase().includes('timeout ')) {
