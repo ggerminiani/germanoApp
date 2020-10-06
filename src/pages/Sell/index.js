@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import {
   StyleSheet,
   Text,
@@ -7,19 +7,23 @@ import {
   KeyboardAvoidingView,
 } from 'react-native';
 
-//import CheckBox from '@react-native-community/checkbox';
-import CheckBox from 'react-native-check-box';
-
-import { TextInputMask } from 'react-native-masked-text';
+import Slider from '@react-native-community/slider';
+//import CheckBox from 'react-native-check-box';
 
 import Logo from '../../components/logo';
 import SelectModal from '../../components/modalSelect';
+import CheckBox from '../../components/checkBox';
 
 import { getFIPE } from '../../services/Cars';
 
 import Colors from '../../styles/Colors';
+import numeral from '../../vendros/numeral';
 
 const Sell = () => {
+  const refKm = useRef(null);
+
+  const maxKm = 500000;
+
   const [brandData, setBrandData] = useState(null);
   const [modelData, setModelData] = useState(null);
   const [yearData, setYearData] = useState(null);
@@ -28,8 +32,62 @@ const Sell = () => {
   const [model, setModel] = useState(null);
   const [year, setYear] = useState(null);
   const [color, setColor] = useState(null);
-  const [km, setKm] = useState('Digite quantos Km');
-  const [checkAr, setcheckAr] = useState(false);
+  const [km, setKm] = useState(0);
+
+  const [checkArCondicionado, setCheckArCondicionado] = useState(false);
+  const [checkBancoAltura, setCheckBancoAltura] = useState(false);
+  const [checkBancoEletrico, setCheckBancoEletrico] = useState(false);
+  const [checkBancoCouro, setCheckBancoCouro] = useState(false);
+  const [checkComputadorBordo, setCheckComputadorBordo] = useState(false);
+  const [checkRetrovisorEletrico, setCheckRetrovisorEletrico] = useState(false);
+  const [checkDirecaoHidraulica, setCheckDirecaoHidraulica] = useState(false);
+  const [checkEncostoTraseiro, setCheckEncostoTraseiro] = useState(false);
+  const [checkFaroisRegulagem, setCheckFaroisRegulagem] = useState(false);
+  const [checkGPS, setCheckGPS] = useState(false);
+  const [checkPilotoAutomatico, setCheckPilotoAutomatico] = useState(false);
+  const [checkVidrosEletricos, setCheckVidrosEletricos] = useState(false);
+  const [checkVoltanteAltura, setCheckVoltanteAltura] = useState(false);
+  const [checkAirbagMotorista, setCheckAirbagMotorista] = useState(false);
+  const [checkAirbagPassageiro, setCheckAirbagPassageiro] = useState(false);
+  const [checkAlarme, setCheckAlarme] = useState(false);
+  const [checkBilndado, setCheckBilndado] = useState(false);
+  const [checkDesembacadorTraseiro, setCheckDesembacadorTraseiro] = useState(
+    false
+  );
+  const [checkEncostoCabecaTraseiro, setCheckEncostoCabecaTraseiro] = useState(
+    false
+  );
+  const [
+    checkFaroisNeblinaDianteiro,
+    setCheckFaroisNeblinaDianteiro,
+  ] = useState(false);
+  const [checkFaroisNeblinaTraseiro, setCheckFaroisNeblinaTraseiro] = useState(
+    false
+  );
+  const [checkFaroisXenon, setCheckFaroisXenon] = useState(false);
+  const [checkFechamentoVidros, setCheckFechamentoVidros] = useState(false);
+  const [checkFriosABS, setCheckFriosABS] = useState(false);
+  const [checkSensorChuva, setCheckSensorChuva] = useState(false);
+  const [checkSensorEstacionamento, setCheckSensorEstacionamento] = useState(
+    false
+  );
+  const [checkSensorLuz, setCheckSensorLuz] = useState(false);
+  const [checkTerceiraLuzFreio, setCheckTerceiraLuzFreio] = useState(false);
+  const [checkTetoSolar, setCheckTetoSolar] = useState(false);
+  const [checkTravaEletrica, setCheckTravaEletrica] = useState(false);
+  const [checkAMFM, setCheckAMFM] = useState(false);
+  const [checkBluetooth, setCheckBluetooth] = useState(false);
+  const [checkCDPlayer, setCheckCDPlayer] = useState(false);
+  const [checkRadioVolante, setCheckRadioVolante] = useState(false);
+  const [checkDVDPlayer, setCheckDVDPlayer] = useState(false);
+  const [checkEntradaAuxiliar, setCheckEntradaAuxiliar] = useState(false);
+  const [checkEntradaUSB, setCheckEntradaUSB] = useState(false);
+  const [checkLeitorMP3, setCheckLeitorMP3] = useState(false);
+  const [checkCapota, setCheckCapota] = useState(false);
+  const [checkLimpadorTraseiro, setCheckLimpadorTraseiro] = useState(false);
+  const [checkParachoques, setCheckParachoques] = useState(false);
+  const [checkProtetorCacamba, setCheckProtetorCacamba] = useState(false);
+  const [checkRodaLiga, setCheckRodaLiga] = useState(false);
 
   const colorData = [
     { id: 1, info: 'AMARELO' },
@@ -100,7 +158,7 @@ const Sell = () => {
     setYear(null);
     setPriceData(null);
     setColor(null);
-    setKm('Digite quantos Km');
+    setKm(0);
     setBrand(e);
   };
 
@@ -108,25 +166,38 @@ const Sell = () => {
     setYear(null);
     setPriceData(null);
     setColor(null);
-    setKm('Digite quantos Km');
+    setKm(0);
     setModel(e);
   };
 
   const onPressYear = (e) => {
     setPriceData(null);
     setColor(null);
-    setKm('Digite quantos Km');
+    setKm(0);
     setYear(e);
   };
 
   const onPressColor = (e) => {
-    setKm('Digite quantos Km');
+    setKm(0);
     setColor(e);
   };
 
   const onChangeTextKm = (e) => {
     console.log(e);
     setKm(e);
+  };
+
+  const onPressCheck = (e) => {
+    const { checked, title } = e;
+    console.log(e);
+    switch (title) {
+      case 'Ar-Condicionado':
+        setCheckArCondicionado(!checked);
+        break;
+
+      default:
+        break;
+    }
   };
 
   return (
@@ -172,27 +243,63 @@ const Sell = () => {
           )}
           {color === null ? null : (
             <View>
-              <View style={styles.containerKm}>
-                <TextInputMask
-                  style={styles.containerKmText}
-                  type={'custom'}
-                  value={km}
-                  options={{
-                    mask: '999.99',
-                  }}
-                  onChangeText={(text) => onChangeTextKm(text)}
-                />
-              </View>
+              <Text style={styles.subtitle}>
+                Quilometragem:{' '}
+                {km === 0
+                  ? '0 Km'
+                  : km !== maxKm
+                  ? `${numeral(km).format('0,0')} Km`
+                  : `acima de ${numeral(km).format('0,0')} Km`}
+              </Text>
+              <Slider
+                ref={refKm}
+                style={styles.slider}
+                minimumValue={0}
+                maximumValue={maxKm}
+                value={0}
+                step={5000}
+                onValueChange={(e) => setKm(e)}
+                minimumTrackTintColor={Colors.white}
+                maximumTrackTintColor={Colors.black}
+                thumbTintColor={Colors.dark_bckgrd}
+              />
 
-              <View>
+              <Text style={styles.subtitle}>Opicionais:</Text>
+              <View style={styles.checkbox}>
                 <CheckBox
-                  onClick={() => {
-                    setcheckAr(!checkAr);
-                  }}
-                  isChecked={checkAr}
-                  leftText={'CheckBox'}
-                  checkBoxColor={Colors.white}
+                  onPress={(e) => onPressCheck(e)}
+                  title="Ar-Condicionado"
                 />
+                <CheckBox
+                  onPress={(e) => onPressCheck(e)}
+                  title="Ar-Condicionado"
+                />
+                <CheckBox
+                  onPress={(e) => onPressCheck(e)}
+                  title="Ar-Condicionado"
+                />
+                {/* <>
+                  <CheckBox
+                    onClick={() => {
+                      setCheckArCondicionado(!checkArCondicionado);
+                    }}
+                    isChecked={checkArCondicionado}
+                    checkBoxColor={Colors.white}
+                    rightText="Ar"
+                    rightTextStyle={{ color: Colors.white }}
+                  />
+                </>
+                <>
+                  <CheckBox
+                    onClick={() => {
+                      setCheckArCondicionado(!checkArCondicionado);
+                    }}
+                    isChecked={checkArCondicionado}
+                    checkBoxColor={Colors.white}
+                    rightText="Ar"
+                    rightTextStyle={{ color: Colors.white }}
+                  />
+                </> */}
               </View>
             </View>
           )}
@@ -238,6 +345,24 @@ const styles = StyleSheet.create({
     color: Colors.white,
     textAlign: 'center',
     padding: 10,
+  },
+  subtitle: {
+    marginLeft: 15,
+    marginTop: 20,
+    marginBottom: 5,
+    color: Colors.text,
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  slider: {
+    flex: 1,
+    height: 30,
+    marginHorizontal: 15,
+  },
+  checkbox: {
+    marginHorizontal: 15,
+    marginVertical: 15,
+    flexDirection: 'row',
   },
 });
 
