@@ -5,6 +5,7 @@ import {
   View,
   ActivityIndicator,
   FlatList,
+  Platform,
 } from 'react-native';
 
 import GridViewItem from './gridViewItem';
@@ -14,11 +15,12 @@ import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 const GridView = ({ search, onPress }) => {
   const { type, fileds_search, text_search } = search;
-
+  const renderLine = Platform.OS == 'ios' ? 1 : 1;
   const [carList, setCarList] = useState([]);
-  const [initial, setInitial] = useState(1);
+  const [initial, setInitial] = useState(0);
   const [loading, setLoading] = useState(true);
   const [loadingMore, setLoadingMore] = useState(false);
+  const [totalRows, setTotalRows] = useState(0);
   const offset = 6;
 
   useEffect(() => {
@@ -32,9 +34,11 @@ const GridView = ({ search, onPress }) => {
         initial,
         offset,
       });
-      if (data !== undefined && data !== null && data.length > 0) {
-        setCarList(carList.concat(data));
+      if (data !== undefined && data !== null && data.status == 'successful') {
+        setCarList(carList.concat(data.ads));
+        setTotalRows(data.totalRows);
         setLoading(false);
+        setLoadingMore(false);
       } else {
         setLoading(false);
         setLoadingMore(false);
@@ -47,9 +51,11 @@ const GridView = ({ search, onPress }) => {
         initial,
         offset,
       });
-      if (data !== undefined && data !== null && data.length > 0) {
-        setCarList(carList.concat(data));
+      if (data !== undefined && data !== null && data.status == 'successful') {
+        setCarList(carList.concat(data.ads));
+        setTotalRows(data.totalRows);
         setLoading(false);
+        setLoadingMore(false);
       } else {
         setLoading(false);
         setLoadingMore(false);
@@ -66,9 +72,11 @@ const GridView = ({ search, onPress }) => {
   };
 
   const handleLoadMore = () => {
-    if (carList.length >= 6) {
-      setLoadingMore(true);
-      setInitial(initial + offset);
+    if (!loadingMore) {
+      if (carList.length + 1 < totalRows) {
+        setLoadingMore(true);
+        setInitial(initial + offset);
+      }
     }
   };
 
@@ -103,7 +111,7 @@ const GridView = ({ search, onPress }) => {
             />
           )}
           onEndReached={handleLoadMore}
-          onEndReachedThreshold={0}
+          onEndReachedThreshold={renderLine}
           ListFooterComponent={renderFooter}
         />
       )}

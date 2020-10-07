@@ -354,10 +354,10 @@ const Search = ({ navigation }) => {
         </TouchableOpacity>
 
         <TouchableOpacity
-          style={[styles.buttonContainer, { marginBottom: 30 }]}
+          style={[styles.buttonContainerInvert, { marginBottom: 30 }]}
           onPress={onPressSearch}
         >
-          <Text style={styles.button}>Pesquisar</Text>
+          <Text style={styles.buttonInvert}>Pesquisar</Text>
         </TouchableOpacity>
       </ScrollView>
     </View>
@@ -414,6 +414,32 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '600',
     color: Colors.dark_bckgrd,
+    textAlign: 'center',
+    padding: 5,
+  },
+  buttonContainerInvert: {
+    backgroundColor: Colors.dark_bckgrd,
+    marginHorizontal: 15,
+    marginVertical: 10,
+    padding: 10,
+    borderRadius: 10,
+    borderColor: Colors.border,
+    borderWidth: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  buttonInvert: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: Colors.white,
     textAlign: 'center',
     padding: 5,
   },

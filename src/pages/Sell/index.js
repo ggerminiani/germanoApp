@@ -191,10 +191,135 @@ const Sell = () => {
     const { checked, title } = e;
     console.log(e);
     switch (title) {
-      case 'Ar-Condicionado':
+      case 'Ar Condicionado':
         setCheckArCondicionado(!checked);
         break;
-
+      case 'Banco com regulagem de altura':
+        setCheckBancoAltura(!checked);
+        break;
+      case 'Bancos elétricos':
+        setCheckBancoEletrico(!checked);
+        break;
+      case 'Bancos em couro':
+        setCheckBancoCouro(!checked);
+        break;
+      case 'Computador de bordo':
+        setCheckEncostoTraseiro(!checked);
+        break;
+      case 'Controle de retrovisores elétricos':
+        setCheckFaroisRegulagem(!checked);
+        break;
+      case 'Direção Hidráulica':
+        setCheckVoltanteAltura(!checked);
+        break;
+      case 'Encosto traseiro':
+        setCheckAirbagMotorista(!checked);
+        break;
+      case 'Faróis com regulação automática':
+        setCheckDesembacadorTraseiro(!checked);
+        break;
+      case 'GPS':
+        setCheckEncostoCabecaTraseiro(!checked);
+        break;
+      case 'Piloto automático':
+        setCheckFechamentoVidros(!checked);
+        break;
+      case 'Vidros elétricos':
+        setCheckFriosABS(!checked);
+        break;
+      case 'Volante com regulagem de altura':
+        setCheckTerceiraLuzFreio(!checked);
+        break;
+      case 'Alarme':
+        setCheckTetoSolar(!checked);
+        break;
+      case 'Airbag motorista':
+        setCheckCDPlayer(!checked);
+        break;
+      case 'Airbag passageiro':
+        setCheckRadioVolante(!checked);
+        break;
+      case 'Blindado':
+        setCheckLeitorMP3(!checked);
+        break;
+      case 'Desembaçador traseiro':
+        setCheckCapota(!checked);
+        break;
+      case 'Encosto de cabeça traseiro':
+        setCheckEncostoCabecaTraseiro(!checked);
+        break;
+      case 'Faróis de neblina dianteiros':
+        setCheckFaroisNeblinaDianteiro(!checked);
+        break;
+      case 'Faróis de neblina traseiros':
+        setCheckFaroisNeblinaTraseiro(!checked);
+        break;
+      case 'Faróis de xenon':
+        setCheckFaroisXenon(!checked);
+        break;
+      case 'Fechamento automático dos vidros':
+        setCheckFechamentoVidros(!checked);
+        break;
+      case 'Freios ABS':
+        setCheckFriosABS(!checked);
+        break;
+      case 'Sensor de chuva':
+        setCheckSensorChuva(!checked);
+        break;
+      case 'Sensor de estacionamento':
+        setCheckSensorEstacionamento(!checked);
+        break;
+      case 'Sensor de luz':
+        setCheckSensorLuz(!checked);
+        break;
+      case 'Terceira luz de freio led':
+        setCheckTerceiraLuzFreio(!checked);
+        break;
+      case 'Teto solar elétrico retrátil':
+        setCheckTetoSolar(!checked);
+        break;
+      case 'Trava elétrica central':
+        setCheckTravaEletrica(!checked);
+        break;
+      case 'AM/FM':
+        setCheckAMFM(!checked);
+        break;
+      case 'Bluetooth':
+        setCheckBluetooth(!checked);
+        break;
+      case 'CD player':
+        setCheckCDPlayer(!checked);
+        break;
+      case 'Controle remoto para rádio no volante':
+        setCheckRadioVolante(!checked);
+        break;
+      case 'DVD player':
+        setCheckDVDPlayer(!checked);
+        break;
+      case 'Entrada auxiliar':
+        setCheckEntradaAuxiliar(!checked);
+        break;
+      case 'Entrada USB':
+        setCheckEntradaUSB(!checked);
+        break;
+      case 'Leitor de MP3':
+        setCheckLeitorMP3(!checked);
+        break;
+      case 'Capota':
+        setCheckCapota(!checked);
+        break;
+      case 'Limpador traseiro':
+        setCheckLimpadorTraseiro(!checked);
+        break;
+      case 'Pára-choques na cor do veículo':
+        setCheckParachoques(!checked);
+        break;
+      case 'Protetor de caçamba':
+        setCheckProtetorCacamba(!checked);
+        break;
+      case 'Rodas de liga leve':
+        setCheckRodaLiga(!checked);
+        break;
       default:
         break;
     }
@@ -268,38 +393,113 @@ const Sell = () => {
               <View style={styles.checkbox}>
                 <CheckBox
                   onPress={(e) => onPressCheck(e)}
-                  title="Ar-Condicionado"
+                  title1="Ar Condicionado"
+                  title2="Banco com regulagem de altura"
                 />
                 <CheckBox
                   onPress={(e) => onPressCheck(e)}
-                  title="Ar-Condicionado"
+                  title1="Bancos elétricos"
+                  title2="Bancos em couro"
                 />
                 <CheckBox
                   onPress={(e) => onPressCheck(e)}
-                  title="Ar-Condicionado"
+                  title1="Computador de bordo"
+                  title2="Controle de retrovisores elétricos"
                 />
-                {/* <>
-                  <CheckBox
-                    onClick={() => {
-                      setCheckArCondicionado(!checkArCondicionado);
-                    }}
-                    isChecked={checkArCondicionado}
-                    checkBoxColor={Colors.white}
-                    rightText="Ar"
-                    rightTextStyle={{ color: Colors.white }}
-                  />
-                </>
-                <>
-                  <CheckBox
-                    onClick={() => {
-                      setCheckArCondicionado(!checkArCondicionado);
-                    }}
-                    isChecked={checkArCondicionado}
-                    checkBoxColor={Colors.white}
-                    rightText="Ar"
-                    rightTextStyle={{ color: Colors.white }}
-                  />
-                </> */}
+                <CheckBox
+                  onPress={(e) => onPressCheck(e)}
+                  title1="Direção Hidráulica"
+                  title2="Encosto traseiro"
+                />
+                <CheckBox
+                  onPress={(e) => onPressCheck(e)}
+                  title1="Faróis com regulação automática"
+                  title2="GPS"
+                />
+                <CheckBox
+                  onPress={(e) => onPressCheck(e)}
+                  title1="Piloto automático"
+                  title2="Vidros elétricos"
+                />
+                <CheckBox
+                  onPress={(e) => onPressCheck(e)}
+                  title1="Volante com regulagem de altura"
+                  title2="Alarme"
+                />
+                <CheckBox
+                  onPress={(e) => onPressCheck(e)}
+                  title1="Airbag motorista"
+                  title2="Airbag passageiro"
+                />
+                <CheckBox
+                  onPress={(e) => onPressCheck(e)}
+                  title1="Blindado"
+                  title2="Desembaçador traseiro"
+                />
+                <CheckBox
+                  onPress={(e) => onPressCheck(e)}
+                  title1="Encosto de cabeça traseiro"
+                  title2="Faróis de neblina dianteiros"
+                />
+                <CheckBox
+                  onPress={(e) => onPressCheck(e)}
+                  title1="Faróis de neblina traseiros"
+                  title2="Faróis de xenon"
+                />
+                <CheckBox
+                  onPress={(e) => onPressCheck(e)}
+                  title1="Fechamento automático dos vidros"
+                  title2="Freios ABS"
+                />
+                <CheckBox
+                  onPress={(e) => onPressCheck(e)}
+                  title1="Sensor de chuva"
+                  title2="Sensor de estacionamento"
+                />
+                <CheckBox
+                  onPress={(e) => onPressCheck(e)}
+                  title1="Sensor de luz"
+                  title2="Terceira luz de freio led"
+                />
+                <CheckBox
+                  onPress={(e) => onPressCheck(e)}
+                  title1="Teto solar elétrico retrátil"
+                  title2="Trava elétrica central"
+                />
+                <CheckBox
+                  onPress={(e) => onPressCheck(e)}
+                  title1="AM/FM"
+                  title2="Bluetooth"
+                />
+                <CheckBox
+                  onPress={(e) => onPressCheck(e)}
+                  title1="CD player"
+                  title2="Controle remoto para rádio no volante"
+                />
+                <CheckBox
+                  onPress={(e) => onPressCheck(e)}
+                  title1="DVD player"
+                  title2="Entrada auxiliar"
+                />
+                <CheckBox
+                  onPress={(e) => onPressCheck(e)}
+                  title1="Entrada USB"
+                  title2="Leitor de MP3"
+                />
+                <CheckBox
+                  onPress={(e) => onPressCheck(e)}
+                  title1="Capota"
+                  title2="Limpador traseiro"
+                />
+                <CheckBox
+                  onPress={(e) => onPressCheck(e)}
+                  title1="Pára-choques na cor do veículo"
+                  title2="Protetor de caçamba"
+                />
+                <CheckBox
+                  onPress={(e) => onPressCheck(e)}
+                  title1="Rodas de liga leve"
+                />
               </View>
             </View>
           )}
@@ -362,7 +562,6 @@ const styles = StyleSheet.create({
   checkbox: {
     marginHorizontal: 15,
     marginVertical: 15,
-    flexDirection: 'row',
   },
 });
 

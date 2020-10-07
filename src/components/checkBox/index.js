@@ -1,32 +1,50 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import Colors from '../../styles/Colors';
 
-const CheckBox = ({ onPress, title }) => {
-  const [checked, setChecked] = useState(false);
+const CheckBox = ({ onPress, title1 = null, title2 = null }) => {
+  const [checked1, setChecked1] = useState(false);
+  const [checked2, setChecked2] = useState(false);
 
   return (
-    <TouchableOpacity
-      onPress={(e) => {
-        //console.log(e);
-        console.log(checked);
-
-        setChecked(!checked);
-        console.log(checked);
-        onPress({ checked, title });
-      }}
-      style={styles.container}
-    >
-      {!checked ? (
-        <Icon name="radio-button-unchecked" style={styles.checkbox} />
-      ) : (
-        <Icon name="check-circle" style={styles.checkbox} />
+    <View style={[styles.container, { marginBottom: 10 }]}>
+      {title1 === null ? null : (
+        <TouchableOpacity
+          onPress={(e) => {
+            onPress({ checked: !checked1, title: title1 });
+            setChecked1(!checked1);
+          }}
+          style={styles.container}
+        >
+          {!checked1 ? (
+            <Icon name="radio-button-unchecked" style={styles.checkbox} />
+          ) : (
+            <Icon name="check-circle" style={styles.checkbox} />
+          )}
+          <Text style={styles.text}>{title1}</Text>
+        </TouchableOpacity>
       )}
-      <Text style={styles.text}>{title}</Text>
-    </TouchableOpacity>
+
+      {title2 === null ? null : (
+        <TouchableOpacity
+          onPress={(e) => {
+            onPress({ checked: !checked2, title: title2 });
+            setChecked2(!checked2);
+          }}
+          style={styles.container}
+        >
+          {!checked2 ? (
+            <Icon name="radio-button-unchecked" style={styles.checkbox} />
+          ) : (
+            <Icon name="check-circle" style={styles.checkbox} />
+          )}
+          <Text style={styles.text}>{title2}</Text>
+        </TouchableOpacity>
+      )}
+    </View>
   );
 };
 
@@ -39,12 +57,12 @@ const styles = StyleSheet.create({
   checkbox: {
     color: Colors.white,
     fontSize: 22,
-    marginLeft: 5,
   },
   text: {
-    marginLeft: 10,
+    flex: 1,
     color: Colors.white,
-    fontSize: 16,
+    fontSize: 14,
+    marginLeft: 5,
   },
 });
 

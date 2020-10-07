@@ -5,6 +5,7 @@ import {
   View,
   ActivityIndicator,
   FlatList,
+  Platform,
 } from 'react-native';
 
 import ListViewItem from './listViewItem';
@@ -14,12 +15,14 @@ import { Colors } from 'react-native/Libraries/NewAppScreen';
 //import { DetailsScreen } from '../../routes';
 
 const ListView = ({ search, onPress }) => {
+  const renderLine = Platform.OS == 'ios' ? 1 : 1;
+  console.log(renderLine);
   const { type, fileds_search, text_search } = search;
-
   const [carList, setCarList] = useState([]);
-  const [initial, setInitial] = useState(1);
+  const [initial, setInitial] = useState(0);
   const [loadingMore, setLoadingMore] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [totalRows, setTotalRows] = useState(0);
   const offset = 6;
 
   useEffect(() => {
@@ -33,9 +36,11 @@ const ListView = ({ search, onPress }) => {
         initial,
         offset,
       });
-      if (data !== undefined && data !== null && data.length > 0) {
-        setCarList(carList.concat(data));
+      if (data !== undefined && data !== null && data.status == 'successful') {
+        setCarList(carList.concat(data.ads));
+        setTotalRows(data.totalRows);
         setLoading(false);
+        setLoadingMore(false);
       } else {
         setLoading(false);
         setLoadingMore(false);
@@ -48,17 +53,17 @@ const ListView = ({ search, onPress }) => {
         initial,
         offset,
       });
-      if (data !== undefined && data !== null && data.length > 0) {
-        setCarList(carList.concat(data));
+      if (data !== undefined && data !== null && data.status == 'successful') {
+        setCarList(carList.concat(data.ads));
+        setTotalRows(data.totalRows);
         setLoading(false);
+        setLoadingMore(false);
       } else {
         setLoading(false);
         setLoadingMore(false);
       }
     }
   }
-
-  console.log(carList);
 
   const renderFooter = () => {
     return (
@@ -69,9 +74,11 @@ const ListView = ({ search, onPress }) => {
   };
 
   const handleLoadMore = () => {
-    if (carList.length >= 6) {
-      setLoadingMore(true);
-      setInitial(initial + offset);
+    if (!loadingMore) {
+      if (carList.length + 1 < totalRows) {
+        setLoadingMore(true);
+        setInitial(initial + offset);
+      }
     }
   };
 
@@ -97,15 +104,17 @@ const ListView = ({ search, onPress }) => {
           keyExtractor={(item) => {
             item.idcar;
           }}
-          renderItem={({ item, index }) => (
-            <ListViewItem
-              key={`list_${index.toString()}`}
-              data={item}
-              onPress={onPress}
-            />
-          )}
+          renderItem={({ item, index }) => {
+            return (
+              <ListViewItem
+                key={`list_${index.toString()}`}
+                data={item}
+                onPress={onPress}
+              />
+            );
+          }}
           onEndReached={handleLoadMore}
-          onEndReachedThreshold={0}
+          onEndReachedThreshold={renderLine}
           ListFooterComponent={renderFooter}
         />
       )}
