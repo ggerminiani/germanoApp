@@ -8,11 +8,13 @@ import {
 } from 'react-native';
 
 import Slider from '@react-native-community/slider';
-//import CheckBox from 'react-native-check-box';
 
 import Logo from '../../components/logo';
 import SelectModal from '../../components/modalSelect';
 import CheckBox from '../../components/checkBox';
+import Camera from '../../components/cameraButton';
+import Attachment from '../../components/attachment';
+import ImagesPreview from '../../components/imagesPreview';
 
 import { getFIPE } from '../../services/Cars';
 
@@ -23,6 +25,8 @@ const Sell = () => {
   const refKm = useRef(null);
 
   const maxKm = 500000;
+
+  const [photos, setPhotos] = useState([]);
 
   const [brandData, setBrandData] = useState(null);
   const [modelData, setModelData] = useState(null);
@@ -182,11 +186,6 @@ const Sell = () => {
     setColor(e);
   };
 
-  const onChangeTextKm = (e) => {
-    console.log(e);
-    setKm(e);
-  };
-
   const onPressCheck = (e) => {
     const { checked, title } = e;
     console.log(e);
@@ -323,6 +322,10 @@ const Sell = () => {
       default:
         break;
     }
+  };
+
+  const onPressPicture = (e) => {
+    setPhotos([...photos, e]);
   };
 
   return (
@@ -501,6 +504,12 @@ const Sell = () => {
                   title1="Rodas de liga leve"
                 />
               </View>
+
+              <View style={{ flexDirection: 'row' }}>
+                <Camera onPress={(e) => onPressPicture(e)} />
+                <Attachment />
+              </View>
+              {photos.length == 0 ? null : <ImagesPreview data={photos} />}
             </View>
           )}
         </ScrollView>
