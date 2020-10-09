@@ -23,7 +23,7 @@ const ImagesPreview = ({ data }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'red',
+    marginVertical: 10
   },
 });
 

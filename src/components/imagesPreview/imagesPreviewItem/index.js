@@ -6,31 +6,40 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Colors from '../../../styles/Colors';
 
 const ImagesPreviewItem = ({ item }) => {
-  return (
-    <View>
-      <TouchableOpacity
-        style={styles.containerButton}
-        onPress={(e) => onPress(data.idcar)}
-      >
-        <View style={styles.containerItem}>
-          <Image
-            source={image_url}
-            resizeMethod="resize"
-            resizeMode="contain"
-            style={styles.image}
-          />
 
-          <View style={styles.containerData}>
-            <Text style={styles.description}>{car}</Text>
+  /*<TouchableOpacity
+          style={styles.containerButton}
+          onPress={(e) => onPress(data.idcar)}
+        >
+          <View style={styles.containerItem}>
+            <Image
+              source={image_url}
+              resizeMethod="resize"
+              resizeMode="contain"
+              style={styles.image}
+            />
 
-            <View style={styles.priceContainer}>
-              <Text style={styles.price}>
-                {numeral(parseFloat(data.price)).format('$ 0,0.00')}
-              </Text>
+            <View style={styles.containerData}>
+              <Text style={styles.description}>{car}</Text>
+
+              <View style={styles.priceContainer}>
+                <Text style={styles.price}>
+                  {numeral(parseFloat(data.price)).format('$ 0,0.00')}
+                </Text>
+              </View>
             </View>
           </View>
-        </View>
-      </TouchableOpacity>
+        </TouchableOpacity>*/
+
+  console.log(item);
+  return (
+    <View style={styles.container}>
+      <Image
+        source={{uri: item.uri}}
+        resizeMethod="resize"
+        resizeMode="contain"
+        style={styles.image}
+      />
     </View>
   );
 };
@@ -46,19 +55,11 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     margin: 3,
   },
-  containerButton: {
-    flex: 1,
-    width: '100%',
-  },
-  containerItem: {
-    flex: 1,
-    alignItems: 'center',
-  },
   image: {
     borderRadius: 5,
     flex: 1,
-    width: 140,
-    height: 140,
+    width: '100%',
+    height: 150,
     marginTop: 5,
   },
   containerData: {

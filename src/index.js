@@ -1,12 +1,20 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
+import * as ScreenOrientation from 'expo-screen-orientation';
 
 import Routes from './routes';
 
-const App = () => (
+const App = () => {
+  async function changeScreenOrientation() {
+    await ScreenOrientation.lockAsync(
+      ScreenOrientation.OrientationLock.PORTRAIT_UP,
+    );
+  }
+  changeScreenOrientation();
+
   <NavigationContainer>
     <Routes />
   </NavigationContainer>
-);
+};
 
 export default App;

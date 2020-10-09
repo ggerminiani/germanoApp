@@ -10,7 +10,7 @@ export const getCars = async (data) => {
       return response.data;
     })
     .catch(function (error) {
-      if (error.toString().toLowerCase().includes('timeout ')) {
+      if (error.toString().toLowerCase().includes('timeout')) {
         return {
           status: 'error',
           message: 'Requisição ultrapassou o limite de tempo de resposta.',

@@ -26,7 +26,7 @@ const CameraButton = ({ onPress }) => {
 
   const onPressTakePicture = async () => {
     if (refCamera) {
-      const options = { quality: 0.1, base64: false, skipProcessing: true };
+      const options = { quality: 0.1, base64: false, skipProcessing: true, exif: true };
       let photo = await refCamera.current.takePictureAsync(options);
       setModal(false);
       onPress(photo);
