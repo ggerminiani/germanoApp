@@ -155,7 +155,7 @@ const Sell = () => {
     if (year !== null) {
       loadPrice(brand.id, model.id, year.id);
     }
-  }, [brand, model, year, color]);
+  }, [brand, model, year, color, photos]);
 
   const onPressBrand = (e) => {
     setModel(null);
@@ -188,7 +188,7 @@ const Sell = () => {
 
   const onPressCheck = (e) => {
     const { checked, title } = e;
-    console.log(e);
+
     switch (title) {
       case 'Ar Condicionado':
         setCheckArCondicionado(!checked);
@@ -328,11 +328,15 @@ const Sell = () => {
     setPhotos([...photos, e]);
   };
 
+  const onPressItem = (e) => {
+    setPhotos(photos.splice(e, 1));
+  }
+console.log(photos);
   return (
     <View style={styles.container}>
       <KeyboardAvoidingView
         behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
-        style={styles.container}
+        style={[styles.container, {paddingTop: 0}]}
       >
         <Logo />
         <ScrollView>
@@ -509,7 +513,7 @@ const Sell = () => {
                 <Camera onPress={(e) => onPressPicture(e)} />
                 <Attachment />
               </View>
-              {photos.length == 0 ? null : <ImagesPreview data={photos} />}
+              {photos.length == 0 ? null : <ImagesPreview data={photos} onPress={(e) => onPressItem(e)} />}
             </View>
           )}
         </ScrollView>
@@ -522,7 +526,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.background,
-    paddingTop: 20,
+    paddingTop: 25,
   },
   title: {
     textAlign: 'center',

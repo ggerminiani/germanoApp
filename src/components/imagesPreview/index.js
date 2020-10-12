@@ -3,7 +3,7 @@ import { StyleSheet, FlatList, View } from 'react-native';
 
 import ImagesPreviewItem from './imagesPreviewItem';
 
-const ImagesPreview = ({ data }) => {
+const ImagesPreview = ({ data, onPress }) => {
   useEffect(() => {}, [data]);
 
   return (
@@ -13,7 +13,7 @@ const ImagesPreview = ({ data }) => {
         numColumns={2}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item, index }) => (
-          <ImagesPreviewItem key={index.toString()} item={item} />
+          <ImagesPreviewItem key={index.toString()} item={item} index={index} onPress={(e) => onPress(e)} />
         )}
       />
     </View>

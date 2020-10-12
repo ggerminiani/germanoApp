@@ -12,9 +12,11 @@ const App = () => {
   }
   changeScreenOrientation();
 
+  return (
   <NavigationContainer>
     <Routes />
   </NavigationContainer>
+  )
 };
 
 export default App;

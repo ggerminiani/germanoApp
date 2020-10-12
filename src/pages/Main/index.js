@@ -71,9 +71,9 @@ const Main = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <ScrollView>
-        <Logo />
 
+        <Logo />
+        <ScrollView>
         {news !== null ? (
           <SliderView
             name="Novidades"
@@ -106,8 +106,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.background,
-    //marginTop: 20,
-    paddingTop: 20,
+    paddingTop: 25,
   },
 });
 

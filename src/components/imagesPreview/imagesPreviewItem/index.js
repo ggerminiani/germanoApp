@@ -1,37 +1,12 @@
 import React from 'react';
-import { StyleSheet, Text, Image, View } from 'react-native';
+import { StyleSheet, Text, Image, View, TouchableOpacity } from 'react-native';
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import Colors from '../../../styles/Colors';
 
-const ImagesPreviewItem = ({ item }) => {
+const ImagesPreviewItem = ({ item, index, onPress }) => {
 
-  /*<TouchableOpacity
-          style={styles.containerButton}
-          onPress={(e) => onPress(data.idcar)}
-        >
-          <View style={styles.containerItem}>
-            <Image
-              source={image_url}
-              resizeMethod="resize"
-              resizeMode="contain"
-              style={styles.image}
-            />
-
-            <View style={styles.containerData}>
-              <Text style={styles.description}>{car}</Text>
-
-              <View style={styles.priceContainer}>
-                <Text style={styles.price}>
-                  {numeral(parseFloat(data.price)).format('$ 0,0.00')}
-                </Text>
-              </View>
-            </View>
-          </View>
-        </TouchableOpacity>*/
-
-  console.log(item);
   return (
     <View style={styles.container}>
       <Image
@@ -40,6 +15,10 @@ const ImagesPreviewItem = ({ item }) => {
         resizeMode="contain"
         style={styles.image}
       />
+      <TouchableOpacity style={styles.delete} onPress={(e) => onPress(index)}>
+        <Icon name="delete" size={22} color={Colors.white} style={{flex: 1, paddingRight: 5, textAlign: 'right'}} />
+        <Text style={{flex: 1, fontSize: 17, color: Colors.white}}>Excluir</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -62,52 +41,15 @@ const styles = StyleSheet.create({
     height: 150,
     marginTop: 5,
   },
-  containerData: {
-    flex: 1,
-  },
-  description: {
-    marginTop: 5,
-    fontSize: 12,
-    fontWeight: 'bold',
-    color: Colors.text,
-    textAlign: 'center',
-    flex: 1,
-  },
-  price: {
-    color: Colors.text,
-    textAlign: 'center',
-    fontSize: 14,
-    fontWeight: 'bold',
-    paddingVertical: 2,
-    //width: '100%',
-  },
-  priceContainer: {
+  delete: {
+    flexDirection: 'row',
+    paddingVertical: 10,
     backgroundColor: Colors.dolar,
-    borderRadius: 3,
-    margin: 5,
-  },
-  detailsContainer: {
-    paddingBottom: 10,
-  },
-  detailsRow: {
     flex: 1,
-    flexDirection: 'row',
-  },
-  detailsItem: {
-    flex: 1,
-    flexDirection: 'row',
-  },
-  detailsText: {
-    flex: 1,
-    justifyContent: 'center',
-    fontSize: 8,
-    color: Colors.white,
-    marginLeft: 5,
-    marginTop: 5,
-  },
-  detailsIcon: {
-    marginLeft: 1,
-  },
+    borderBottomLeftRadius: 10,
+    borderBottomRightRadius: 10,
+    alignItems: 'center'
+  }
 });
 
 export default ImagesPreviewItem;
