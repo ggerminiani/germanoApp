@@ -325,10 +325,13 @@ const Sell = () => {
   };
 
   const onPressItem = (e) => {
-    setPhotos(photos.splice(e, 1));
+    console.log('index ' + e);
+    setPhotos(photos.filter((item) => item.uri !== e));
   };
 
-  console.log(photos);
+  const onPressAttachment = (e) => {
+    setPhotos([...photos, e]);
+  };
 
   return (
     <View style={styles.container}>
@@ -509,7 +512,7 @@ const Sell = () => {
 
               <View style={{ flexDirection: 'row' }}>
                 <Camera onPress={(e) => onPressPicture(e)} />
-                <Attachment />
+                <Attachment onPress={(e) => onPressAttachment(e)} />
               </View>
               {photos.length == 0 ? null : (
                 <ImagesPreview data={photos} onPress={(e) => onPressItem(e)} />

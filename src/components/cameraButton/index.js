@@ -1,9 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
 import { Camera } from 'expo-camera';
-import { StyleSheet, TouchableOpacity, View, Modal, Text } from 'react-native';
-
+import React, { useEffect, useRef, useState } from 'react';
+import { Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-
 import Colors from '../../styles/Colors';
 import numeral from '../../vendros/numeral';
 
@@ -26,7 +24,8 @@ const CameraButton = ({ onPress }) => {
 
   const onPressTakePicture = async () => {
     if (refCamera) {
-      const options = { quality: 0.1, base64: false, skipProcessing: false, exif: true };
+      //const options = { quality: 0.1, base64: false, skipProcessing: false, exif: true };
+      const options = { quality: 0.1 };
       let photo = await refCamera.current.takePictureAsync(options);
       setModal(false);
       setCameraReady(false);

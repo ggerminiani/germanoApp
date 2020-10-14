@@ -1,4 +1,5 @@
 import { NavigationContainer } from '@react-navigation/native';
+import * as ScreenOrientation from 'expo-screen-orientation';
 import React from 'react';
 import Routes from './routes';
 
