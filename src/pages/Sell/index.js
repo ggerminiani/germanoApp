@@ -1,23 +1,19 @@
-import React, { useEffect, useState, useRef } from 'react';
+import Slider from '@react-native-community/slider';
+import React, { useEffect, useRef, useState } from 'react';
 import {
+  KeyboardAvoidingView,
+  ScrollView,
   StyleSheet,
   Text,
   View,
-  ScrollView,
-  KeyboardAvoidingView,
 } from 'react-native';
-
-import Slider from '@react-native-community/slider';
-
+import Attachment from '../../components/attachment';
+import Camera from '../../components/cameraButton';
+import CheckBox from '../../components/checkBox';
+import ImagesPreview from '../../components/imagesPreview';
 import Logo from '../../components/logo';
 import SelectModal from '../../components/modalSelect';
-import CheckBox from '../../components/checkBox';
-import Camera from '../../components/cameraButton';
-import Attachment from '../../components/attachment';
-import ImagesPreview from '../../components/imagesPreview';
-
 import { getFIPE } from '../../services/Cars';
-
 import Colors from '../../styles/Colors';
 import numeral from '../../vendros/numeral';
 
@@ -330,13 +326,15 @@ const Sell = () => {
 
   const onPressItem = (e) => {
     setPhotos(photos.splice(e, 1));
-  }
-console.log(photos);
+  };
+
+  console.log(photos);
+
   return (
     <View style={styles.container}>
       <KeyboardAvoidingView
         behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
-        style={[styles.container, {paddingTop: 0}]}
+        style={[styles.container, { paddingTop: 0 }]}
       >
         <Logo />
         <ScrollView>
@@ -513,7 +511,9 @@ console.log(photos);
                 <Camera onPress={(e) => onPressPicture(e)} />
                 <Attachment />
               </View>
-              {photos.length == 0 ? null : <ImagesPreview data={photos} onPress={(e) => onPressItem(e)} />}
+              {photos.length == 0 ? null : (
+                <ImagesPreview data={photos} onPress={(e) => onPressItem(e)} />
+              )}
             </View>
           )}
         </ScrollView>
