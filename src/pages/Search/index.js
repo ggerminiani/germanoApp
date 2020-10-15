@@ -1,20 +1,11 @@
-import React, { useEffect, useState, useRef } from 'react';
-import {
-  StyleSheet,
-  ScrollView,
-  Text,
-  View,
-  TouchableOpacity,
-  Alert,
-} from 'react-native';
 import Slider from '@react-native-community/slider';
-
+import React, { useEffect, useRef, useState } from 'react';
+import { Alert, ScrollView, StyleSheet, Text, View } from 'react-native';
+import Button from '../../components/buttonAction';
 import Logo from '../../components/logo';
-import SearchItem from '../../components/searchItem';
 import SelectModal from '../../components/modalSelect';
-
+import SearchItem from '../../components/searchItem';
 import { getCars } from '../../services/Cars';
-
 import Colors from '../../styles/Colors';
 import numeral from '../../vendros/numeral';
 
@@ -246,7 +237,7 @@ const Search = ({ navigation }) => {
             },
           ]}
         >
-          - - - OU - - -
+          - - - OU SELECIONE - - -
         </Text>
         <SelectModal
           title="Marca"
@@ -346,19 +337,8 @@ const Search = ({ navigation }) => {
           thumbTintColor={Colors.dark_bckgrd}
         />
 
-        <TouchableOpacity
-          style={[styles.buttonContainer, { marginTop: 30 }]}
-          onPress={onPressClean}
-        >
-          <Text style={styles.button}>Limpar Filtros</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={[styles.buttonContainerInvert, { marginBottom: 30 }]}
-          onPress={onPressSearch}
-        >
-          <Text style={styles.buttonInvert}>Pesquisar</Text>
-        </TouchableOpacity>
+        <Button text="Pesquisar" primary={true} onPress={onPressSearch} />
+        <Button text="Limpar Filtros" primary={false} onPress={onPressClean} />
       </ScrollView>
     </View>
   );
@@ -390,58 +370,6 @@ const styles = StyleSheet.create({
     flex: 1,
     height: 30,
     marginHorizontal: 15,
-  },
-  buttonContainer: {
-    backgroundColor: Colors.white,
-    marginHorizontal: 15,
-    marginVertical: 10,
-    padding: 10,
-    borderRadius: 10,
-    borderColor: Colors.border,
-    borderWidth: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
-  },
-  button: {
-    fontSize: 18,
-    fontWeight: '600',
-    color: Colors.dark_bckgrd,
-    textAlign: 'center',
-    padding: 5,
-  },
-  buttonContainerInvert: {
-    backgroundColor: Colors.dark_bckgrd,
-    marginHorizontal: 15,
-    marginVertical: 10,
-    padding: 10,
-    borderRadius: 10,
-    borderColor: Colors.border,
-    borderWidth: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
-  },
-  buttonInvert: {
-    fontSize: 18,
-    fontWeight: '600',
-    color: Colors.white,
-    textAlign: 'center',
-    padding: 5,
   },
 });
 

@@ -7,7 +7,9 @@ import {
   Text,
   View,
 } from 'react-native';
+import { TextInput } from 'react-native-gesture-handler';
 import Attachment from '../../components/attachment';
+import Button from '../../components/buttonAction';
 import Camera from '../../components/cameraButton';
 import CheckBox from '../../components/checkBox';
 import ImagesPreview from '../../components/imagesPreview';
@@ -33,6 +35,7 @@ const Sell = () => {
   const [year, setYear] = useState(null);
   const [color, setColor] = useState(null);
   const [km, setKm] = useState(0);
+  const [obs, setObs] = useState('');
 
   const [checkArCondicionado, setCheckArCondicionado] = useState(false);
   const [checkBancoAltura, setCheckBancoAltura] = useState(false);
@@ -151,7 +154,15 @@ const Sell = () => {
     if (year !== null) {
       loadPrice(brand.id, model.id, year.id);
     }
-  }, [brand, model, year, color, photos]);
+  }, [
+    brand,
+    model,
+    year,
+    color,
+    photos,
+    checkArCondicionado,
+    checkLimpadorTraseiro,
+  ]);
 
   const onPressBrand = (e) => {
     setModel(null);
@@ -186,7 +197,7 @@ const Sell = () => {
     const { checked, title } = e;
 
     switch (title) {
-      case 'Ar Condicionado':
+      case 'Ar Condicionado':
         setCheckArCondicionado(!checked);
         break;
       case 'Banco com regulagem de altura':
@@ -199,46 +210,46 @@ const Sell = () => {
         setCheckBancoCouro(!checked);
         break;
       case 'Computador de bordo':
-        setCheckEncostoTraseiro(!checked);
+        setCheckComputadorBordo(!checked);
         break;
       case 'Controle de retrovisores elétricos':
-        setCheckFaroisRegulagem(!checked);
+        setCheckRetrovisorEletrico(!checked);
         break;
       case 'Direção Hidráulica':
-        setCheckVoltanteAltura(!checked);
+        setCheckDirecaoHidraulica(!checked);
         break;
       case 'Encosto traseiro':
-        setCheckAirbagMotorista(!checked);
+        setCheckEncostoTraseiro(!checked);
         break;
       case 'Faróis com regulação automática':
-        setCheckDesembacadorTraseiro(!checked);
+        setCheckFaroisRegulagem(!checked);
         break;
       case 'GPS':
-        setCheckEncostoCabecaTraseiro(!checked);
+        setCheckGPS(!checked);
         break;
       case 'Piloto automático':
-        setCheckFechamentoVidros(!checked);
+        setCheckPilotoAutomatico(!checked);
         break;
       case 'Vidros elétricos':
-        setCheckFriosABS(!checked);
+        setCheckVidrosEletricos(!checked);
         break;
       case 'Volante com regulagem de altura':
-        setCheckTerceiraLuzFreio(!checked);
+        setCheckVoltanteAltura(!checked);
         break;
       case 'Alarme':
-        setCheckTetoSolar(!checked);
+        setCheckAlarme(!checked);
         break;
       case 'Airbag motorista':
-        setCheckCDPlayer(!checked);
+        setCheckAirbagMotorista(!checked);
         break;
       case 'Airbag passageiro':
-        setCheckRadioVolante(!checked);
+        setCheckAirbagPassageiro(!checked);
         break;
       case 'Blindado':
-        setCheckLeitorMP3(!checked);
+        setCheckBilndado(!checked);
         break;
       case 'Desembaçador traseiro':
-        setCheckCapota(!checked);
+        setCheckDesembacadorTraseiro(!checked);
         break;
       case 'Encosto de cabeça traseiro':
         setCheckEncostoCabecaTraseiro(!checked);
@@ -315,8 +326,6 @@ const Sell = () => {
       case 'Rodas de liga leve':
         setCheckRodaLiga(!checked);
         break;
-      default:
-        break;
     }
   };
 
@@ -325,12 +334,67 @@ const Sell = () => {
   };
 
   const onPressItem = (e) => {
-    console.log('index ' + e);
     setPhotos(photos.filter((item) => item.uri !== e));
   };
 
   const onPressAttachment = (e) => {
     setPhotos([...photos, e]);
+  };
+
+  const onPressSend = () => {
+    const data = {
+      brand,
+      model,
+      year,
+      color,
+      km,
+      priceData,
+      obs,
+      checkArCondicionado,
+      checkBancoAltura,
+      checkBancoEletrico,
+      checkBancoCouro,
+      checkEncostoTraseiro,
+      checkFaroisRegulagem,
+      checkVoltanteAltura,
+      checkAirbagMotorista,
+      checkDesembacadorTraseiro,
+      checkEncostoCabecaTraseiro,
+      checkFechamentoVidros,
+      checkFriosABS,
+      checkTerceiraLuzFreio,
+      checkTetoSolar,
+      checkCDPlayer,
+      checkRadioVolante,
+      checkLeitorMP3,
+      checkCapota,
+      checkFaroisNeblinaDianteiro,
+      checkFaroisNeblinaTraseiro,
+      checkFaroisXenon,
+      checkSensorChuva,
+      checkSensorEstacionamento,
+      checkSensorLuz,
+      checkTravaEletrica,
+      checkAMFM,
+      checkBluetooth,
+      checkDVDPlayer,
+      checkEntradaAuxiliar,
+      checkEntradaUSB,
+      checkLimpadorTraseiro,
+      checkParachoques,
+      checkProtetorCacamba,
+      checkRodaLiga,
+      checkComputadorBordo,
+      checkRetrovisorEletrico,
+      checkGPS,
+      checkDirecaoHidraulica,
+      checkPilotoAutomatico,
+      checkVidrosEletricos,
+      checkAirbagPassageiro,
+      checkAlarme,
+      checkBilndado,
+    };
+    console.log(data);
   };
 
   return (
@@ -517,6 +581,41 @@ const Sell = () => {
               {photos.length == 0 ? null : (
                 <ImagesPreview data={photos} onPress={(e) => onPressItem(e)} />
               )}
+
+              <View
+                style={{
+                  flex: 1,
+                  padding: 5,
+                  backgroundColor: Colors.dark_bckgrd,
+                  marginHorizontal: 15,
+                  marginVertical: 5,
+                  marginTop: 10,
+                  padding: 10,
+                  borderRadius: 10,
+                  borderColor: Colors.border,
+                  borderWidth: 1,
+                  shadowColor: '#000',
+                  shadowOffset: {
+                    width: 0,
+                    height: 2,
+                  },
+                  shadowOpacity: 0.25,
+                  shadowRadius: 3.84,
+                  elevation: 5,
+                }}
+              >
+                <TextInput
+                  style={{
+                    fontSize: 18,
+                    color: Colors.white,
+                    textAlign: 'left',
+                  }}
+                  placeholder="Informe se há alguma observação..."
+                  placeholderTextColor={Colors.inactive}
+                  onChangeText={(e) => setObs(e)}
+                />
+              </View>
+              <Button text="Enviar Solicitação" onPress={onPressSend} />
             </View>
           )}
         </ScrollView>
