@@ -69,7 +69,7 @@ const Sell = () => {
   );
   const [checkFaroisXenon, setCheckFaroisXenon] = useState(false);
   const [checkFechamentoVidros, setCheckFechamentoVidros] = useState(false);
-  const [checkFriosABS, setCheckFriosABS] = useState(false);
+  const [checkFreiosABS, setCheckFreiosABS] = useState(false);
   const [checkSensorChuva, setCheckSensorChuva] = useState(false);
   const [checkSensorEstacionamento, setCheckSensorEstacionamento] = useState(
     false
@@ -154,15 +154,7 @@ const Sell = () => {
     if (year !== null) {
       loadPrice(brand.id, model.id, year.id);
     }
-  }, [
-    brand,
-    model,
-    year,
-    color,
-    photos,
-    checkArCondicionado,
-    checkLimpadorTraseiro,
-  ]);
+  }, [brand, model, year, color, photos]);
 
   const onPressBrand = (e) => {
     setModel(null);
@@ -198,133 +190,132 @@ const Sell = () => {
 
     switch (title) {
       case 'Ar Condicionado':
-        setCheckArCondicionado(!checked);
+        setCheckArCondicionado(!checkArCondicionado);
+      case 'Banco com regulagem de altura':
+        setCheckBancoAltura(!checkBancoAltura);
         break;
-      case 'Banco com regulagem de altura':
-        setCheckBancoAltura(!checked);
+      case 'Bancos elétricos':
+        setCheckBancoEletrico(!checkBancoEletrico);
         break;
-      case 'Bancos elétricos':
-        setCheckBancoEletrico(!checked);
+      case 'Bancos em couro':
+        setCheckBancoCouro(!checkBancoCouro);
         break;
-      case 'Bancos em couro':
-        setCheckBancoCouro(!checked);
+      case 'Computador de bordo':
+        setCheckComputadorBordo(!checkComputadorBordo);
         break;
-      case 'Computador de bordo':
-        setCheckComputadorBordo(!checked);
+      case 'Controle de retrovisores elétricos':
+        setCheckRetrovisorEletrico(!checkRetrovisorEletrico);
         break;
-      case 'Controle de retrovisores elétricos':
-        setCheckRetrovisorEletrico(!checked);
+      case 'Direção Hidráulica':
+        setCheckDirecaoHidraulica(!checkDirecaoHidraulica);
         break;
-      case 'Direção Hidráulica':
-        setCheckDirecaoHidraulica(!checked);
+      case 'Encosto traseiro':
+        setCheckEncostoTraseiro(!checkEncostoTraseiro);
         break;
-      case 'Encosto traseiro':
-        setCheckEncostoTraseiro(!checked);
-        break;
-      case 'Faróis com regulação automática':
-        setCheckFaroisRegulagem(!checked);
+      case 'Faróis com regulação automática':
+        setCheckFaroisRegulagem(!checkFaroisRegulagem);
         break;
       case 'GPS':
-        setCheckGPS(!checked);
+        setCheckGPS(!checkGPS);
         break;
-      case 'Piloto automático':
-        setCheckPilotoAutomatico(!checked);
+      case 'Piloto automático':
+        setCheckPilotoAutomatico(!checkPilotoAutomatico);
         break;
-      case 'Vidros elétricos':
-        setCheckVidrosEletricos(!checked);
+      case 'Vidros elétricos':
+        setCheckVidrosEletricos(!checkVidrosEletricos);
         break;
-      case 'Volante com regulagem de altura':
-        setCheckVoltanteAltura(!checked);
+      case 'Volante com regulagem de altura':
+        setCheckVoltanteAltura(!checkVoltanteAltura);
         break;
       case 'Alarme':
-        setCheckAlarme(!checked);
+        setCheckAlarme(!checkAlarme);
         break;
-      case 'Airbag motorista':
-        setCheckAirbagMotorista(!checked);
+      case 'Airbag motorista':
+        setCheckAirbagMotorista(!checkAirbagMotorista);
         break;
-      case 'Airbag passageiro':
-        setCheckAirbagPassageiro(!checked);
+      case 'Airbag passageiro':
+        setCheckAirbagPassageiro(!checkAirbagPassageiro);
         break;
       case 'Blindado':
-        setCheckBilndado(!checked);
+        setCheckBilndado(!checkBilndado);
         break;
-      case 'Desembaçador traseiro':
-        setCheckDesembacadorTraseiro(!checked);
+      case 'Desembaçador traseiro':
+        setCheckDesembacadorTraseiro(!checkDesembacadorTraseiro);
         break;
-      case 'Encosto de cabeça traseiro':
-        setCheckEncostoCabecaTraseiro(!checked);
+      case 'Encosto de cabeça traseiro':
+        setCheckEncostoCabecaTraseiro(!checkEncostoCabecaTraseiro);
         break;
-      case 'Faróis de neblina dianteiros':
-        setCheckFaroisNeblinaDianteiro(!checked);
+      case 'Faróis de neblina dianteiros':
+        setCheckFaroisNeblinaDianteiro(!checkFaroisNeblinaDianteiro);
         break;
-      case 'Faróis de neblina traseiros':
-        setCheckFaroisNeblinaTraseiro(!checked);
+      case 'Faróis de neblina traseiros':
+        setCheckFaroisNeblinaTraseiro(!checkFaroisNeblinaTraseiro);
         break;
-      case 'Faróis de xenon':
-        setCheckFaroisXenon(!checked);
+      case 'Faróis de xenon':
+        setCheckFaroisXenon(!checkFaroisXenon);
         break;
-      case 'Fechamento automático dos vidros':
-        setCheckFechamentoVidros(!checked);
+      case 'Fechamento automático dos vidros':
+        setCheckFechamentoVidros(!checkFechamentoVidros);
         break;
-      case 'Freios ABS':
-        setCheckFriosABS(!checked);
+      case 'Freios ABS':
+        setCheckFreiosABS(!checkFreiosABS);
         break;
-      case 'Sensor de chuva':
-        setCheckSensorChuva(!checked);
+      case 'Sensor de chuva':
+        setCheckSensorChuva(!checkSensorChuva);
         break;
-      case 'Sensor de estacionamento':
-        setCheckSensorEstacionamento(!checked);
+      case 'Sensor de estacionamento':
+        setCheckSensorEstacionamento(!checkSensorEstacionamento);
         break;
-      case 'Sensor de luz':
-        setCheckSensorLuz(!checked);
+      case 'Sensor de luz':
+        setCheckSensorLuz(!checkSensorLuz);
         break;
-      case 'Terceira luz de freio led':
-        setCheckTerceiraLuzFreio(!checked);
+      case 'Terceira luz de freio led':
+        setCheckTerceiraLuzFreio(!checkTerceiraLuzFreio);
         break;
-      case 'Teto solar elétrico retrátil':
-        setCheckTetoSolar(!checked);
+      case 'Teto solar elétrico retrátil':
+        setCheckTetoSolar(!checkTetoSolar);
         break;
-      case 'Trava elétrica central':
-        setCheckTravaEletrica(!checked);
+      case 'Trava elétrica central':
+        setCheckTravaEletrica(!checkTravaEletrica);
         break;
       case 'AM/FM':
-        setCheckAMFM(!checked);
+        setCheckAMFM(!checkAMFM);
         break;
       case 'Bluetooth':
-        setCheckBluetooth(!checked);
+        setCheckBluetooth(!checkBluetooth);
         break;
-      case 'CD player':
-        setCheckCDPlayer(!checked);
+      case 'CD player':
+        setCheckCDPlayer(!checkCDPlayer);
         break;
-      case 'Controle remoto para rádio no volante':
-        setCheckRadioVolante(!checked);
+      case 'Controle remoto para rádio no volante':
+        setCheckRadioVolante(!checkRadioVolante);
         break;
-      case 'DVD player':
-        setCheckDVDPlayer(!checked);
+      case 'DVD player':
+        setCheckDVDPlayer(!checkDVDPlayer);
         break;
-      case 'Entrada auxiliar':
-        setCheckEntradaAuxiliar(!checked);
+      case 'Entrada auxiliar':
+        setCheckEntradaAuxiliar(!checkEntradaAuxiliar);
         break;
-      case 'Entrada USB':
-        setCheckEntradaUSB(!checked);
+      case 'Entrada USB':
+        setCheckEntradaUSB(!checkEntradaUSB);
         break;
-      case 'Leitor de MP3':
-        setCheckLeitorMP3(!checked);
+      case 'Leitor de MP3':
+        setCheckLeitorMP3(!checkLeitorMP3);
         break;
       case 'Capota':
-        setCheckCapota(!checked);
+        setCheckCapota(!checkCapota);
         break;
-      case 'Limpador traseiro':
-        setCheckLimpadorTraseiro(!checked);
+      case 'Limpador traseiro':
+        setCheckLimpadorTraseiro(!checkLimpadorTraseiro);
         break;
-      case 'Pára-choques na cor do veículo':
-        setCheckParachoques(!checked);
+      case 'Pára-choques na cor do veículo':
+        setCheckParachoques(!checkParachoques);
         break;
-      case 'Protetor de caçamba':
-        setCheckProtetorCacamba(!checked);
+      case 'Protetor de caçamba':
+        setCheckProtetorCacamba(!checkProtetorCacamba);
         break;
-      case 'Rodas de liga leve':
-        setCheckRodaLiga(!checked);
+      case 'Rodas de liga leve':
+        setCheckRodaLiga(!checkRodaLiga);
         break;
     }
   };
@@ -338,63 +329,106 @@ const Sell = () => {
   };
 
   const onPressAttachment = (e) => {
-    setPhotos([...photos, e]);
+    if (!e.cancelled) {
+      setPhotos([...photos, e]);
+    }
   };
 
   const onPressSend = () => {
-    const data = {
-      brand,
-      model,
-      year,
-      color,
-      km,
-      priceData,
-      obs,
-      checkArCondicionado,
-      checkBancoAltura,
-      checkBancoEletrico,
-      checkBancoCouro,
-      checkEncostoTraseiro,
-      checkFaroisRegulagem,
-      checkVoltanteAltura,
-      checkAirbagMotorista,
-      checkDesembacadorTraseiro,
-      checkEncostoCabecaTraseiro,
-      checkFechamentoVidros,
-      checkFriosABS,
-      checkTerceiraLuzFreio,
-      checkTetoSolar,
-      checkCDPlayer,
-      checkRadioVolante,
-      checkLeitorMP3,
-      checkCapota,
-      checkFaroisNeblinaDianteiro,
-      checkFaroisNeblinaTraseiro,
-      checkFaroisXenon,
-      checkSensorChuva,
-      checkSensorEstacionamento,
-      checkSensorLuz,
-      checkTravaEletrica,
-      checkAMFM,
-      checkBluetooth,
-      checkDVDPlayer,
-      checkEntradaAuxiliar,
-      checkEntradaUSB,
-      checkLimpadorTraseiro,
-      checkParachoques,
-      checkProtetorCacamba,
-      checkRodaLiga,
-      checkComputadorBordo,
-      checkRetrovisorEletrico,
-      checkGPS,
-      checkDirecaoHidraulica,
-      checkPilotoAutomatico,
-      checkVidrosEletricos,
-      checkAirbagPassageiro,
-      checkAlarme,
-      checkBilndado,
-    };
-    console.log(data);
+    let uploadPhotos = new FormData();
+    let attachments = '';
+    var re = /(?:\.([^.]+))?$/;
+
+    try {
+      console.log(photos);
+      /*    photos.forEach((photo, index) => {
+        var ext = re.exec(photo)[1];
+
+        const file =
+          condominium.id_condominio +
+          '_' +
+          condominium.condominio
+            .trim()
+            .replace(/\s/g, '_')
+            .replace(/\./g, '')
+            .replace(/\//g, '_') +
+          '_' +
+          user.id +
+          '_' +
+          (index + 1) +
+          '_' +
+          moment().format('YYYYMMDDssmmhh') +
+          '.' +
+          ext;
+
+        if (attachments == '') {
+          attachments = file;
+        } else {
+          attachments += ';' + file;
+        }
+
+        uploadPhotos.append('images[]', {
+          uri: Platform.OS === 'android' ? photo : photo.replace('file://', ''),
+          type: 'image/' + ext,
+          name: file,
+        });
+      });
+*/
+      const data = {
+        brand,
+        model,
+        year,
+        color,
+        km,
+        priceData,
+        obs,
+        checkArCondicionado,
+        checkBancoAltura,
+        checkBancoEletrico,
+        checkBancoCouro,
+        checkEncostoTraseiro,
+        checkFaroisRegulagem,
+        checkVoltanteAltura,
+        checkAirbagMotorista,
+        checkDesembacadorTraseiro,
+        checkEncostoCabecaTraseiro,
+        checkFechamentoVidros,
+        checkFreiosABS,
+        checkTerceiraLuzFreio,
+        checkTetoSolar,
+        checkCDPlayer,
+        checkRadioVolante,
+        checkLeitorMP3,
+        checkCapota,
+        checkFaroisNeblinaDianteiro,
+        checkFaroisNeblinaTraseiro,
+        checkFaroisXenon,
+        checkSensorChuva,
+        checkSensorEstacionamento,
+        checkSensorLuz,
+        checkTravaEletrica,
+        checkAMFM,
+        checkBluetooth,
+        checkDVDPlayer,
+        checkEntradaAuxiliar,
+        checkEntradaUSB,
+        checkLimpadorTraseiro,
+        checkParachoques,
+        checkProtetorCacamba,
+        checkRodaLiga,
+        checkComputadorBordo,
+        checkRetrovisorEletrico,
+        checkGPS,
+        checkDirecaoHidraulica,
+        checkPilotoAutomatico,
+        checkVidrosEletricos,
+        checkAirbagPassageiro,
+        checkAlarme,
+        checkBilndado,
+      };
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
