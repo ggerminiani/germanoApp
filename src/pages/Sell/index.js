@@ -16,6 +16,8 @@ import ImagesPreview from '../../components/imagesPreview';
 import Logo from '../../components/logo';
 import SelectModal from '../../components/modalSelect';
 import { getFIPE } from '../../services/Cars';
+import { sendFiles } from '../../services/Sell';
+import { getUUID } from '../../services/UUID';
 import Colors from '../../styles/Colors';
 import numeral from '../../vendros/numeral';
 
@@ -334,32 +336,15 @@ const Sell = () => {
     }
   };
 
-  const onPressSend = () => {
+  const onPressSend = async () => {
     let uploadPhotos = new FormData();
     let attachments = '';
     var re = /(?:\.([^.]+))?$/;
 
     try {
-      console.log(photos);
-      /*    photos.forEach((photo, index) => {
-        var ext = re.exec(photo)[1];
-
-        const file =
-          condominium.id_condominio +
-          '_' +
-          condominium.condominio
-            .trim()
-            .replace(/\s/g, '_')
-            .replace(/\./g, '')
-            .replace(/\//g, '_') +
-          '_' +
-          user.id +
-          '_' +
-          (index + 1) +
-          '_' +
-          moment().format('YYYYMMDDssmmhh') +
-          '.' +
-          ext;
+      photos.forEach((photo, index) => {
+        var ext = re.exec(photo.uri);
+        const file = getUUID() + ext[0];
 
         if (attachments == '') {
           attachments = file;
@@ -368,12 +353,18 @@ const Sell = () => {
         }
 
         uploadPhotos.append('images[]', {
-          uri: Platform.OS === 'android' ? photo : photo.replace('file://', ''),
-          type: 'image/' + ext,
+          uri:
+            Platform.OS === 'android'
+              ? photo.uri
+              : photo.uri.replace('file://', ''),
+          type: 'image/' + ext[1],
           name: file,
         });
       });
-*/
+
+      const files = await sendFiles(uploadPhotos);
+      console.log(files);
+
       const data = {
         brand,
         model,

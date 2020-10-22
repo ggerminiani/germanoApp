@@ -8,7 +8,8 @@ npm-debug.*
 *.mobileprovision
 *.orig.*
 web-build/
-src/services/**/*
+src/services/Cars.js
+src/services/Sell.js
 
 # macOS
 .DS_Store
