@@ -1,13 +1,15 @@
 import Slider from '@react-native-community/slider';
 import React, { useEffect, useRef, useState } from 'react';
 import {
+  Alert,
   KeyboardAvoidingView,
   ScrollView,
   StyleSheet,
   Text,
+  TextInput,
   View,
 } from 'react-native';
-import { TextInput } from 'react-native-gesture-handler';
+import { TextInputMask } from 'react-native-masked-text';
 import Attachment from '../../components/attachment';
 import Button from '../../components/buttonAction';
 import Camera from '../../components/cameraButton';
@@ -16,13 +18,17 @@ import ImagesPreview from '../../components/imagesPreview';
 import Logo from '../../components/logo';
 import SelectModal from '../../components/modalSelect';
 import { getFIPE } from '../../services/Cars';
-import { sendFiles } from '../../services/Sell';
+import { sendQuote } from '../../services/Sell';
 import { getUUID } from '../../services/UUID';
 import Colors from '../../styles/Colors';
 import numeral from '../../vendros/numeral';
 
 const Sell = () => {
   const refKm = useRef(null);
+  const refName = useRef(null);
+  const refPhone = useRef(null);
+  const refEmail = useRef(null);
+  const refObs = useRef(null);
 
   const maxKm = 500000;
 
@@ -38,6 +44,9 @@ const Sell = () => {
   const [color, setColor] = useState(null);
   const [km, setKm] = useState(0);
   const [obs, setObs] = useState('');
+  const [name, setName] = useState('');
+  const [phone, setPhone] = useState('');
+  const [email, setEmail] = useState('');
 
   const [checkArCondicionado, setCheckArCondicionado] = useState(false);
   const [checkBancoAltura, setCheckBancoAltura] = useState(false);
@@ -337,7 +346,29 @@ const Sell = () => {
   };
 
   const onPressSend = async () => {
-    let uploadPhotos = new FormData();
+    if (name.trim() === '') {
+      Alert.alert(
+        'Formulário Incompleto',
+        'Para continuar, preencha o seu nome.'
+      );
+      return;
+    }
+    if (phone.trim() === '') {
+      Alert.alert(
+        'Formulário Incompleto',
+        'Para continuar, preencha o seu telefone.'
+      );
+      return;
+    }
+    if (email.trim() === '') {
+      Alert.alert(
+        'Formulário Incompleto',
+        'Para continuar, preencha o seu e-mail.'
+      );
+      return;
+    }
+
+    let uploadData = new FormData();
     let attachments = '';
     var re = /(?:\.([^.]+))?$/;
 
@@ -352,7 +383,7 @@ const Sell = () => {
           attachments += ';' + file;
         }
 
-        uploadPhotos.append('images[]', {
+        uploadData.append('images[]', {
           uri:
             Platform.OS === 'android'
               ? photo.uri
@@ -362,10 +393,13 @@ const Sell = () => {
         });
       });
 
-      const files = await sendFiles(uploadPhotos);
-      console.log(files);
+      //const files = await sendFiles(uploadData);
+      //console.log(files);
 
       const data = {
+        name,
+        phone,
+        email,
         brand,
         model,
         year,
@@ -417,6 +451,12 @@ const Sell = () => {
         checkAlarme,
         checkBilndado,
       };
+
+      uploadData.append('data', JSON.stringify(data));
+
+      const send = await sendQuote(uploadData);
+
+      console.log(send);
     } catch (error) {
       console.error(error);
     }
@@ -607,39 +647,63 @@ const Sell = () => {
                 <ImagesPreview data={photos} onPress={(e) => onPressItem(e)} />
               )}
 
-              <View
-                style={{
-                  flex: 1,
-                  padding: 5,
-                  backgroundColor: Colors.dark_bckgrd,
-                  marginHorizontal: 15,
-                  marginVertical: 5,
-                  marginTop: 10,
-                  padding: 10,
-                  borderRadius: 10,
-                  borderColor: Colors.border,
-                  borderWidth: 1,
-                  shadowColor: '#000',
-                  shadowOffset: {
-                    width: 0,
-                    height: 2,
-                  },
-                  shadowOpacity: 0.25,
-                  shadowRadius: 3.84,
-                  elevation: 5,
-                }}
-              >
+              <View style={styles.textContainer}>
                 <TextInput
-                  style={{
-                    fontSize: 18,
-                    color: Colors.white,
-                    textAlign: 'left',
+                  style={styles.textInfo}
+                  ref={refName}
+                  placeholder="Nome"
+                  placeholderTextColor={Colors.inactive}
+                  onChangeText={(e) => setName(e)}
+                  returnKeyType="next"
+                  autoCorrect={false}
+                  keyboardType="ascii-capable"
+                  onSubmitEditing={(e) => refPhone.current.focus()}
+                />
+              </View>
+
+              <View style={styles.textContainer}>
+                <TextInputMask
+                  style={styles.textInfo}
+                  ref={refPhone}
+                  onChangeText={(e) => setPhone(e)}
+                  value={phone}
+                  placeholder="Telefone com DDD"
+                  placeholderTextColor={Colors.inactive}
+                  type={'cel-phone'}
+                  options={{
+                    maskType: 'BRL',
+                    withDDD: true,
+                    dddMask: '(99) ',
                   }}
+                />
+              </View>
+
+              <View style={styles.textContainer}>
+                <TextInput
+                  style={styles.textInfo}
+                  ref={refEmail}
+                  placeholder="E-mail"
+                  placeholderTextColor={Colors.inactive}
+                  onChangeText={(e) => setEmail(e)}
+                  returnKeyType="next"
+                  autoCapitalize="none"
+                  keyboardType="email-address"
+                  textContentType="emailAddress"
+                  autoCompleteType="email"
+                  onSubmitEditing={(e) => refObs.current.focus()}
+                />
+              </View>
+
+              <View style={styles.textContainer}>
+                <TextInput
+                  style={styles.textInfo}
+                  ref={refObs}
                   placeholder="Informe se há alguma observação..."
                   placeholderTextColor={Colors.inactive}
                   onChangeText={(e) => setObs(e)}
                 />
               </View>
+
               <Button text="Enviar Solicitação" onPress={onPressSend} />
             </View>
           )}
@@ -702,6 +766,32 @@ const styles = StyleSheet.create({
   checkbox: {
     marginHorizontal: 15,
     marginVertical: 15,
+  },
+  textContainer: {
+    flex: 1,
+    padding: 5,
+    backgroundColor: Colors.dark_bckgrd,
+    marginHorizontal: 15,
+    marginVertical: 5,
+    marginTop: 10,
+    padding: 10,
+    borderRadius: 10,
+    borderColor: Colors.border,
+    borderWidth: 1,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  textInfo: {
+    fontSize: 18,
+    color: Colors.white,
+    textAlign: 'center',
+    paddingVertical: 5,
   },
 });
 
