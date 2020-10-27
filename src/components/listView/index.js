@@ -1,22 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import {
-  StyleSheet,
-  Text,
-  View,
   ActivityIndicator,
   FlatList,
   Platform,
+  StyleSheet,
+  Text,
+  View,
 } from 'react-native';
-
+import { Colors } from 'react-native/Libraries/NewAppScreen';
+import { getCars } from '../../services/Cars';
 import ListViewItem from './listViewItem';
 
-import { getCars } from '../../services/Cars';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
 //import { DetailsScreen } from '../../routes';
 
 const ListView = ({ search, onPress }) => {
   const renderLine = Platform.OS == 'ios' ? 1 : 1;
-  console.log(renderLine);
   const { type, fileds_search, text_search } = search;
   const [carList, setCarList] = useState([]);
   const [initial, setInitial] = useState(0);

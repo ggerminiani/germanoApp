@@ -1,9 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { StyleSheet, ScrollView, Dimensions, Text, View } from 'react-native';
-
-import SliderViewItem from './sliderViewItem';
-
+import { Dimensions, ScrollView, StyleSheet, Text, View } from 'react-native';
 import Colors from '../../styles/Colors';
+import SliderViewItem from './sliderViewItem';
 
 let screenWidth = Dimensions.get('window').width;
 let screenHeight = Dimensions.get('window').height;
@@ -45,8 +43,8 @@ const SliderView = ({ name, data, onPress }) => {
 
       if (startTimer) {
         //Uncomment THIS
-        // timer();
-        // setstartTimer(false);
+        timer();
+        setstartTimer(false);
       }
     };
 

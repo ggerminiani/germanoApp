@@ -18,12 +18,12 @@ import ImagesPreview from '../../components/imagesPreview';
 import Logo from '../../components/logo';
 import SelectModal from '../../components/modalSelect';
 import { getFIPE } from '../../services/Cars';
-import { sendQuote } from '../../services/Sell';
+import { sendFiles } from '../../services/Sell';
 import { getUUID } from '../../services/UUID';
 import Colors from '../../styles/Colors';
 import numeral from '../../vendros/numeral';
 
-const Sell = () => {
+const Sell = ({ navigation }) => {
   const refKm = useRef(null);
   const refName = useRef(null);
   const refPhone = useRef(null);
@@ -49,7 +49,9 @@ const Sell = () => {
   const [email, setEmail] = useState('');
 
   const [checkArCondicionado, setCheckArCondicionado] = useState(false);
-  const [checkBancoAltura, setCheckBancoAltura] = useState(false);
+  const [checkBancoRegulagemAltura, setCheckBancoRegulagemAltura] = useState(
+    false
+  );
   const [checkBancoEletrico, setCheckBancoEletrico] = useState(false);
   const [checkBancoCouro, setCheckBancoCouro] = useState(false);
   const [checkComputadorBordo, setCheckComputadorBordo] = useState(false);
@@ -64,7 +66,7 @@ const Sell = () => {
   const [checkAirbagMotorista, setCheckAirbagMotorista] = useState(false);
   const [checkAirbagPassageiro, setCheckAirbagPassageiro] = useState(false);
   const [checkAlarme, setCheckAlarme] = useState(false);
-  const [checkBilndado, setCheckBilndado] = useState(false);
+  const [checkBlindado, setCheckBlindado] = useState(false);
   const [checkDesembacadorTraseiro, setCheckDesembacadorTraseiro] = useState(
     false
   );
@@ -202,8 +204,9 @@ const Sell = () => {
     switch (title) {
       case 'Ar Condicionado':
         setCheckArCondicionado(!checkArCondicionado);
+        break;
       case 'Banco com regulagem de altura':
-        setCheckBancoAltura(!checkBancoAltura);
+        setCheckBancoRegulagemAltura(!checkBancoRegulagemAltura);
         break;
       case 'Bancos elétricos':
         setCheckBancoEletrico(!checkBancoEletrico);
@@ -248,7 +251,7 @@ const Sell = () => {
         setCheckAirbagPassageiro(!checkAirbagPassageiro);
         break;
       case 'Blindado':
-        setCheckBilndado(!checkBilndado);
+        setCheckBlindado(!checkBlindado);
         break;
       case 'Desembaçador traseiro':
         setCheckDesembacadorTraseiro(!checkDesembacadorTraseiro);
@@ -348,21 +351,21 @@ const Sell = () => {
   const onPressSend = async () => {
     if (name.trim() === '') {
       Alert.alert(
-        'Formulário Incompleto',
+        'Formulário Incompleto!',
         'Para continuar, preencha o seu nome.'
       );
       return;
     }
     if (phone.trim() === '') {
       Alert.alert(
-        'Formulário Incompleto',
+        'Formulário Incompleto!',
         'Para continuar, preencha o seu telefone.'
       );
       return;
     }
     if (email.trim() === '') {
       Alert.alert(
-        'Formulário Incompleto',
+        'Formulário Incompleto!',
         'Para continuar, preencha o seu e-mail.'
       );
       return;
@@ -393,9 +396,6 @@ const Sell = () => {
         });
       });
 
-      //const files = await sendFiles(uploadData);
-      //console.log(files);
-
       const data = {
         name,
         phone,
@@ -407,56 +407,68 @@ const Sell = () => {
         km,
         priceData,
         obs,
-        checkArCondicionado,
-        checkBancoAltura,
-        checkBancoEletrico,
-        checkBancoCouro,
-        checkEncostoTraseiro,
-        checkFaroisRegulagem,
-        checkVoltanteAltura,
-        checkAirbagMotorista,
-        checkDesembacadorTraseiro,
-        checkEncostoCabecaTraseiro,
-        checkFechamentoVidros,
-        checkFreiosABS,
-        checkTerceiraLuzFreio,
-        checkTetoSolar,
-        checkCDPlayer,
-        checkRadioVolante,
-        checkLeitorMP3,
-        checkCapota,
-        checkFaroisNeblinaDianteiro,
-        checkFaroisNeblinaTraseiro,
-        checkFaroisXenon,
-        checkSensorChuva,
-        checkSensorEstacionamento,
-        checkSensorLuz,
-        checkTravaEletrica,
-        checkAMFM,
-        checkBluetooth,
-        checkDVDPlayer,
-        checkEntradaAuxiliar,
-        checkEntradaUSB,
-        checkLimpadorTraseiro,
-        checkParachoques,
-        checkProtetorCacamba,
-        checkRodaLiga,
-        checkComputadorBordo,
-        checkRetrovisorEletrico,
-        checkGPS,
-        checkDirecaoHidraulica,
-        checkPilotoAutomatico,
-        checkVidrosEletricos,
-        checkAirbagPassageiro,
-        checkAlarme,
-        checkBilndado,
+        optional: {
+          checkArCondicionado,
+          checkBancoRegulagemAltura,
+          checkBancoEletrico,
+          checkBancoCouro,
+          checkEncostoTraseiro,
+          checkFaroisRegulagem,
+          checkVoltanteAltura,
+          checkAirbagMotorista,
+          checkDesembacadorTraseiro,
+          checkEncostoCabecaTraseiro,
+          checkFechamentoVidros,
+          checkFreiosABS,
+          checkTerceiraLuzFreio,
+          checkTetoSolar,
+          checkCDPlayer,
+          checkRadioVolante,
+          checkLeitorMP3,
+          checkCapota,
+          checkFaroisNeblinaDianteiro,
+          checkFaroisNeblinaTraseiro,
+          checkFaroisXenon,
+          checkSensorChuva,
+          checkSensorEstacionamento,
+          checkSensorLuz,
+          checkTravaEletrica,
+          checkAMFM,
+          checkBluetooth,
+          checkDVDPlayer,
+          checkEntradaAuxiliar,
+          checkEntradaUSB,
+          checkLimpadorTraseiro,
+          checkParachoques,
+          checkProtetorCacamba,
+          checkRodaLiga,
+          checkComputadorBordo,
+          checkRetrovisorEletrico,
+          checkGPS,
+          checkDirecaoHidraulica,
+          checkPilotoAutomatico,
+          checkVidrosEletricos,
+          checkAirbagPassageiro,
+          checkAlarme,
+          checkBlindado,
+        },
       };
 
       uploadData.append('data', JSON.stringify(data));
+      const saveQuote = await sendFiles(uploadData);
 
-      const send = await sendQuote(uploadData);
-
-      console.log(send);
+      if (saveQuote.status == 'successful') {
+        Alert.alert('Dados enviados!', 'Agora aguarde retornarmos o contato.');
+        navigation.navigate('Home', {
+          screen: 'Main',
+        });
+      } else {
+        Alert.alert(
+          'Oops!',
+          'Tivemos algum problem em enviar seus dados... tente novamente!'
+        );
+        return;
+      }
     } catch (error) {
       console.error(error);
     }
@@ -655,16 +667,16 @@ const Sell = () => {
                   placeholderTextColor={Colors.inactive}
                   onChangeText={(e) => setName(e)}
                   returnKeyType="next"
-                  autoCorrect={false}
                   keyboardType="ascii-capable"
-                  onSubmitEditing={(e) => refPhone.current.focus()}
+                  maxLength={50}
+                  //onSubmitEditing={(e) => refPhone.current.focus()}
                 />
               </View>
 
               <View style={styles.textContainer}>
                 <TextInputMask
                   style={styles.textInfo}
-                  ref={refPhone}
+                  //ref={refPhone}
                   onChangeText={(e) => setPhone(e)}
                   value={phone}
                   placeholder="Telefone com DDD"
@@ -691,6 +703,7 @@ const Sell = () => {
                   textContentType="emailAddress"
                   autoCompleteType="email"
                   onSubmitEditing={(e) => refObs.current.focus()}
+                  maxLength={255}
                 />
               </View>
 

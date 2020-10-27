@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from 'react';
-import { StyleSheet, Text, View, TextInput } from 'react-native';
+import { StyleSheet, TextInput, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-
 import Color from '../../styles/Colors';
 
 const SerachItem = ({ onChangeText, onSubmitEditing, clear }) => {
@@ -21,6 +20,8 @@ const SerachItem = ({ onChangeText, onSubmitEditing, clear }) => {
         onChangeText={(text) => onChangeText(text)}
         placeholder={'Digite uma marca, modelo, versão...'}
         placeholderTextColor={Color.inactive}
+        autoCorrect={false}
+        returnKeyType="search"
         multiline={false}
         onSubmitEditing={onSubmitEditing}
         ref={refInput}
