@@ -144,7 +144,7 @@ const Contact = ({ navigation }) => {
             <Text style={styles.subtitle}>E-mail</Text>
             <Icon
               style={styles.icon}
-              name="mail"
+              name="email"
               size={24}
               color={Colors.white}
             />
